@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  RSFTreeView.h
 //  RSFVisualizer
 //
 //  Created by Erik Frisk on 12/01/15.
@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RSF.h"
+#import "RSFNode.h"
 
-@interface ViewController : UIViewController
-
-
+@interface RSFTreeView : UIView
+@property (nonatomic, weak) RSFNode *rootNode;
 @end
-

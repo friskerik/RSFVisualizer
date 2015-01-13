@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE0022291A65A954008B2B1B /* fleet1.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE0022271A65A954008B2B1B /* fleet1.txt */; };
+		AE00222A1A65A954008B2B1B /* fleet1.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE0022281A65A954008B2B1B /* fleet1.xml */; };
+		AE00222E1A65B4C6008B2B1B /* RSFFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = AE00222D1A65B4C6008B2B1B /* RSFFileReader.m */; };
+		AE0022311A65BBC8008B2B1B /* RSFNodeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0022301A65BBC8008B2B1B /* RSFNodeSpec.m */; };
+		AE0022341A65C0EA008B2B1B /* IDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0022331A65C0EA008B2B1B /* IDGenerator.m */; };
+		AE0022371A65C4FA008B2B1B /* RSF.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0022361A65C4FA008B2B1B /* RSF.m */; };
+		AE00223A1A65CD21008B2B1B /* fleet.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE0022381A65CD21008B2B1B /* fleet.txt */; };
+		AE00223B1A65CD21008B2B1B /* fleet.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE0022391A65CD21008B2B1B /* fleet.xml */; };
 		AE8765DE1A64487B0013529B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8765DD1A64487B0013529B /* main.m */; };
 		AE8765E11A64487B0013529B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8765E01A64487B0013529B /* AppDelegate.m */; };
 		AE8765E41A64487B0013529B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8765E31A64487B0013529B /* ViewController.m */; };
@@ -14,6 +22,9 @@
 		AE8765E91A64487B0013529B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE8765E81A64487B0013529B /* Images.xcassets */; };
 		AE8765EC1A64487B0013529B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE8765EA1A64487B0013529B /* LaunchScreen.xib */; };
 		AE8765F81A64487B0013529B /* RSFVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8765F71A64487B0013529B /* RSFVisualizerTests.m */; };
+		AE8766031A6449190013529B /* RSFNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8766021A6449190013529B /* RSFNodeView.m */; };
+		AE8766061A64582D0013529B /* RSFTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8766051A64582D0013529B /* RSFTreeView.m */; };
+		AE87660B1A6459C80013529B /* RSFNode.m in Sources */ = {isa = PBXBuildFile; fileRef = AE87660A1A6459C80013529B /* RSFNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +38,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE0022271A65A954008B2B1B /* fleet1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fleet1.txt; sourceTree = "<group>"; };
+		AE0022281A65A954008B2B1B /* fleet1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fleet1.xml; sourceTree = "<group>"; };
+		AE00222C1A65B4C6008B2B1B /* RSFFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFFileReader.h; sourceTree = "<group>"; };
+		AE00222D1A65B4C6008B2B1B /* RSFFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFFileReader.m; sourceTree = "<group>"; };
+		AE00222F1A65BBC8008B2B1B /* RSFNodeSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFNodeSpec.h; sourceTree = "<group>"; };
+		AE0022301A65BBC8008B2B1B /* RSFNodeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFNodeSpec.m; sourceTree = "<group>"; };
+		AE0022321A65C0EA008B2B1B /* IDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDGenerator.h; sourceTree = "<group>"; };
+		AE0022331A65C0EA008B2B1B /* IDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDGenerator.m; sourceTree = "<group>"; };
+		AE0022351A65C4FA008B2B1B /* RSF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSF.h; sourceTree = "<group>"; };
+		AE0022361A65C4FA008B2B1B /* RSF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSF.m; sourceTree = "<group>"; };
+		AE0022381A65CD21008B2B1B /* fleet.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fleet.txt; sourceTree = "<group>"; };
+		AE0022391A65CD21008B2B1B /* fleet.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fleet.xml; sourceTree = "<group>"; };
 		AE8765D81A64487B0013529B /* RSFVisualizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSFVisualizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8765DC1A64487B0013529B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE8765DD1A64487B0013529B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,6 +63,12 @@
 		AE8765F11A64487B0013529B /* RSFVisualizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSFVisualizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8765F61A64487B0013529B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE8765F71A64487B0013529B /* RSFVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSFVisualizerTests.m; sourceTree = "<group>"; };
+		AE8766011A6449190013529B /* RSFNodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFNodeView.h; sourceTree = "<group>"; };
+		AE8766021A6449190013529B /* RSFNodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFNodeView.m; sourceTree = "<group>"; };
+		AE8766041A64582D0013529B /* RSFTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFTreeView.h; sourceTree = "<group>"; };
+		AE8766051A64582D0013529B /* RSFTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFTreeView.m; sourceTree = "<group>"; };
+		AE8766091A6459C80013529B /* RSFNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFNode.h; sourceTree = "<group>"; };
+		AE87660A1A6459C80013529B /* RSFNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +89,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE00222B1A65A95C008B2B1B /* RSFFiles */ = {
+			isa = PBXGroup;
+			children = (
+				AE0022271A65A954008B2B1B /* fleet1.txt */,
+				AE0022281A65A954008B2B1B /* fleet1.xml */,
+				AE0022381A65CD21008B2B1B /* fleet.txt */,
+				AE0022391A65CD21008B2B1B /* fleet.xml */,
+			);
+			name = RSFFiles;
+			sourceTree = "<group>";
+		};
 		AE8765CF1A64487A0013529B = {
 			isa = PBXGroup;
 			children = (
@@ -81,10 +121,10 @@
 		AE8765DA1A64487B0013529B /* RSFVisualizer */ = {
 			isa = PBXGroup;
 			children = (
-				AE8765DF1A64487B0013529B /* AppDelegate.h */,
-				AE8765E01A64487B0013529B /* AppDelegate.m */,
-				AE8765E21A64487B0013529B /* ViewController.h */,
-				AE8765E31A64487B0013529B /* ViewController.m */,
+				AE00222B1A65A95C008B2B1B /* RSFFiles */,
+				AE87660C1A6459CE0013529B /* Model */,
+				AE8766071A64598D0013529B /* Views */,
+				AE8766081A6459950013529B /* Controllers */,
 				AE8765E51A64487B0013529B /* Main.storyboard */,
 				AE8765E81A64487B0013529B /* Images.xcassets */,
 				AE8765EA1A64487B0013529B /* LaunchScreen.xib */,
@@ -96,6 +136,8 @@
 		AE8765DB1A64487B0013529B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AE8765DF1A64487B0013529B /* AppDelegate.h */,
+				AE8765E01A64487B0013529B /* AppDelegate.m */,
 				AE8765DC1A64487B0013529B /* Info.plist */,
 				AE8765DD1A64487B0013529B /* main.m */,
 			);
@@ -117,6 +159,43 @@
 				AE8765F61A64487B0013529B /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AE8766071A64598D0013529B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AE8766041A64582D0013529B /* RSFTreeView.h */,
+				AE8766051A64582D0013529B /* RSFTreeView.m */,
+				AE8766011A6449190013529B /* RSFNodeView.h */,
+				AE8766021A6449190013529B /* RSFNodeView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		AE8766081A6459950013529B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AE8765E21A64487B0013529B /* ViewController.h */,
+				AE8765E31A64487B0013529B /* ViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		AE87660C1A6459CE0013529B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AE0022321A65C0EA008B2B1B /* IDGenerator.h */,
+				AE0022331A65C0EA008B2B1B /* IDGenerator.m */,
+				AE00222F1A65BBC8008B2B1B /* RSFNodeSpec.h */,
+				AE0022301A65BBC8008B2B1B /* RSFNodeSpec.m */,
+				AE8766091A6459C80013529B /* RSFNode.h */,
+				AE87660A1A6459C80013529B /* RSFNode.m */,
+				AE00222C1A65B4C6008B2B1B /* RSFFileReader.h */,
+				AE00222D1A65B4C6008B2B1B /* RSFFileReader.m */,
+				AE0022351A65C4FA008B2B1B /* RSF.h */,
+				AE0022361A65C4FA008B2B1B /* RSF.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +247,7 @@
 				TargetAttributes = {
 					AE8765D71A64487B0013529B = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 8M5U25686N;
 					};
 					AE8765F01A64487B0013529B = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -200,8 +280,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE8765E71A64487B0013529B /* Main.storyboard in Resources */,
+				AE0022291A65A954008B2B1B /* fleet1.txt in Resources */,
 				AE8765EC1A64487B0013529B /* LaunchScreen.xib in Resources */,
+				AE00223A1A65CD21008B2B1B /* fleet.txt in Resources */,
+				AE00222A1A65A954008B2B1B /* fleet1.xml in Resources */,
 				AE8765E91A64487B0013529B /* Images.xcassets in Resources */,
+				AE00223B1A65CD21008B2B1B /* fleet.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,9 +303,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE0022371A65C4FA008B2B1B /* RSF.m in Sources */,
+				AE00222E1A65B4C6008B2B1B /* RSFFileReader.m in Sources */,
 				AE8765E41A64487B0013529B /* ViewController.m in Sources */,
+				AE8766031A6449190013529B /* RSFNodeView.m in Sources */,
+				AE0022311A65BBC8008B2B1B /* RSFNodeSpec.m in Sources */,
+				AE8766061A64582D0013529B /* RSFTreeView.m in Sources */,
 				AE8765E11A64487B0013529B /* AppDelegate.m in Sources */,
 				AE8765DE1A64487B0013529B /* main.m in Sources */,
+				AE0022341A65C0EA008B2B1B /* IDGenerator.m in Sources */,
+				AE87660B1A6459C80013529B /* RSFNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,9 +436,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = RSFVisualizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -355,9 +449,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = RSFVisualizer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -414,6 +511,7 @@
 				AE8765FD1A64487B0013529B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AE8765FE1A64487B0013529B /* Build configuration list for PBXNativeTarget "RSFVisualizerTests" */ = {
 			isa = XCConfigurationList;
@@ -422,6 +520,7 @@
 				AE8766001A64487B0013529B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
