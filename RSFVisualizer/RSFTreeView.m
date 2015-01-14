@@ -45,13 +45,15 @@
 #define NODE_RADIUS 15
 #define X_MARGIN 0.0
 #define Y_MARGIN 0.0
+#define X_SCALE 1.7
+#define Y_SCALE 1.7
 
 -(CGPoint)screenPoint:(NodePosition)pos
 {
   CGPoint p;
   
-  p.x = pos.x*NODE_RADIUS*2.0 + NODE_RADIUS + X_MARGIN*self.bounds.size.width;
-  p.y = self.bounds.size.height - pos.y*NODE_RADIUS*2.0 - NODE_RADIUS - Y_MARGIN*self.bounds.size.height;
+  p.x = pos.x*X_SCALE*NODE_RADIUS*2.0 + NODE_RADIUS + X_MARGIN*self.bounds.size.width;
+  p.y = self.bounds.size.height - pos.y*Y_SCALE*NODE_RADIUS*2.0 - NODE_RADIUS - Y_MARGIN*self.bounds.size.height;
 
   return p;
 }
@@ -75,7 +77,7 @@
 
 
 #define ARROW_BARB_ANGLE 25.0*M_PI/180.0
-#define ARROW_BARB_LENGTH 10
+#define ARROW_BARB_LENGTH 8
 -(void)drawArrowFrom:(CGPoint)p1 to:(CGPoint)p2
 {
   // Draw stem

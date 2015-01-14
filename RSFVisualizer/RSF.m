@@ -25,7 +25,7 @@
   fr.rsfFilePath = rsfFilePath; // reads file into buffer
   
   [fr skipHeader]; // Skip the first line, header
-  IDGenerator *idGen;
+  IDGenerator *idGen = [[IDGenerator alloc] init];
   
   NSMutableArray *trees = [[NSMutableArray alloc] init];
   RSFNode *rootNode;

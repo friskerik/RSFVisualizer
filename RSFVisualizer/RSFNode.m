@@ -20,6 +20,26 @@ NodePositionMake(double x, double y)
 
 @implementation RSFNode
 
+#pragma mark - Initializer
+-(id)init
+{
+  self = [super init];
+  if (self) {
+    self.pos = NodePositionMake(-1.0, -1.0);
+  }
+  return self;
+}
+
+#pragma mark - Utility functions
+-(bool)hasLayout
+{
+  if (self.pos.x < 0 || self.pos.y < 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 -(int)numberOfNodes
 {
   int n=1;
@@ -73,4 +93,106 @@ NodePositionMake(double x, double y)
     return d+1;
   }
 }
+
+#pragma mark - Tree layout
+-(void)layoutTree
+{
+  // Layout tree
+  [self nodeLayout:[self depth]-1];
+  
+  // Shift layout that leftmost edge is at x=0.0
+  [self shiftNodesRight:-[self minimumXPosition]];
+
+  //  [self dumpLayout];
+}
+
+-(double)minimumXPosition
+{
+  double x = self.pos.x;
+  if (self.left) {
+    x = MIN(x, [self.left minimumXPosition]);
+  }
+  if (self.right) {
+    x = MIN(x, [self.right minimumXPosition]);
+  }
+  return x;
+}
+
+-(void)dumpLayout
+{
+  NSLog(@"Node %d: (%f,%f)", self.nodeId, self.pos.x, self.pos.y);
+  [self.left dumpLayout];
+  [self.right dumpLayout];
+}
+
+#define NODEDISTANCE 1.0
+-(void)nodeLayout:(int)level
+{
+  if ([self isLeaf]) {
+    self.pos = NodePositionMake(0.0, (double)level);
+  } else {
+    int n = [self depth];
+
+    // Layout children (assumes both left and right child)
+    [self.left nodeLayout:level-1];
+    [self.right nodeLayout:level-1];
+
+    // Allocate countours
+    NSMutableArray *lc = [[NSMutableArray alloc] initWithCapacity:n-1];
+    NSMutableArray *rc = [[NSMutableArray alloc] initWithCapacity:n-1];
+    for (int ii=0; ii<n-1; ii++) {
+      [lc addObject:[NSNumber numberWithDouble:-1.0]];
+      [rc addObject:[NSNumber numberWithDouble:-1.0]];
+    }
+    
+    // Compute contours for children
+    [self.left rightContour:rc onLevel:0];
+    [self.right leftContour:lc onLevel:0];
+
+    // Compute amount to shift right tree
+    double minDistance = DBL_MAX;
+    for (int ii=0; ii < n-1; ii++) {
+      if ([lc[ii] doubleValue]>=0.0 && [rc[ii] doubleValue]>=0.0) {
+        minDistance = MIN( minDistance, [lc[ii] doubleValue]-[rc[ii] doubleValue] );
+      }
+    }
+    
+    // Shift right tree
+    [self.right shiftNodesRight:NODEDISTANCE - minDistance];
+    
+    // Set root node
+    self.pos = NodePositionMake((self.left.pos.x + self.right.pos.x)/2.0, level);      
+  }
+}
+
+-(void)shiftNodesRight:(double)delta
+{
+  self.pos = NodePositionMake(self.pos.x + delta, self.pos.y);
+  [self.left shiftNodesRight:delta];
+  [self.right shiftNodesRight:delta];
+}
+
+-(void)leftContour:(NSMutableArray *)c onLevel:(int)level
+{
+  if ([c[level] doubleValue] >= 0.0) {
+    c[level] = [NSNumber numberWithDouble:MIN([c[level] doubleValue],self.pos.x)];
+  } else {
+    c[level] = [NSNumber numberWithDouble:self.pos.x];
+  }
+
+  [self.left leftContour:c onLevel:level+1];
+  [self.right leftContour:c onLevel:level+1];
+}
+
+-(void)rightContour:(NSMutableArray *)c onLevel:(int)level
+{
+  if ([c[level] doubleValue] >= 0.0) {
+    c[level] = [NSNumber numberWithDouble:MAX([c[level] doubleValue],self.pos.x)];
+  } else {
+    c[level] = [NSNumber numberWithDouble:self.pos.x];
+  }
+  [self.left rightContour:c onLevel:level+1];
+  [self.right rightContour:c onLevel:level+1];
+}
+
 @end
