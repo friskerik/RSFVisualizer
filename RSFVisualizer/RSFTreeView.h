@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "RSFNode.h"
 
+typedef enum {NODE_ID, NODE_LEVEL} NodeLabel;
+
 @interface RSFTreeView : UIView
 @property (nonatomic, weak) RSFNode *rootNode;
+@property (nonatomic) BOOL drawBorder;
+@property (nonatomic) NodeLabel nodeLabel;
+
++(CGSize)sizeOfLayoutFrame:(CGRect)layoutFrame;
 @end

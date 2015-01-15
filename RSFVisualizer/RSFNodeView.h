@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RSFNodeView : UIView
-@property (nonatomic) int nodeId;
+@property (nonatomic) int nodeLabel;
 @end

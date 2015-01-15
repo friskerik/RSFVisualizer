@@ -29,9 +29,9 @@
   return self;
 }
 
--(void)setNodeId:(int)nodeId
+-(void)setNodeLabel:(int)nodeLabel
 {
-  _nodeId = nodeId;
+  _nodeLabel = nodeLabel;
   [self setNeedsDisplay];
 }
 
@@ -52,7 +52,7 @@
   [path fill];
   [path stroke];
   
-  NSString *s = [NSString stringWithFormat:@"%d", self.nodeId];
+  NSString *s = [NSString stringWithFormat:@"%d", self.nodeLabel];
   CGSize labelSize = [s sizeWithAttributes:nil];
   
   CGPoint labelp = p;

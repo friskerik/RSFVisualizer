@@ -97,12 +97,13 @@ NodePositionMake(double x, double y)
 #pragma mark - Tree layout
 -(void)layoutTree
 {
-  // Layout tree
-  [self nodeLayout:[self depth]-1];
-  
-  // Shift layout that leftmost edge is at x=0.0
-  [self shiftNodesRight:-[self minimumXPosition]];
-
+  if (![self hasLayout]) {
+    // Layout tree
+    [self nodeLayout:[self depth]-1];
+    
+    // Shift layout so that leftmost border is at x=0.0
+    [self shiftNodesRight:-[self minimumXPosition]];
+  }
   //  [self dumpLayout];
 }
 
@@ -125,7 +126,7 @@ NodePositionMake(double x, double y)
   [self.right dumpLayout];
 }
 
-#define NODEDISTANCE 1.0
+#define NODEDISTANCE 1.1
 -(void)nodeLayout:(int)level
 {
   if ([self isLeaf]) {

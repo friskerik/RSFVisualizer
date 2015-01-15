@@ -25,6 +25,7 @@
 		AE8766031A6449190013529B /* RSFNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8766021A6449190013529B /* RSFNodeView.m */; };
 		AE8766061A64582D0013529B /* RSFTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8766051A64582D0013529B /* RSFTreeView.m */; };
 		AE87660B1A6459C80013529B /* RSFNode.m in Sources */ = {isa = PBXBuildFile; fileRef = AE87660A1A6459C80013529B /* RSFNode.m */; };
+		AE9613E41A6856830067F4C0 /* RSFNode+additions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9613E31A6856830067F4C0 /* RSFNode+additions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		AE8766051A64582D0013529B /* RSFTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFTreeView.m; sourceTree = "<group>"; };
 		AE8766091A6459C80013529B /* RSFNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFNode.h; sourceTree = "<group>"; };
 		AE87660A1A6459C80013529B /* RSFNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFNode.m; sourceTree = "<group>"; };
+		AE9613E21A6856830067F4C0 /* RSFNode+additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSFNode+additions.h"; sourceTree = "<group>"; };
+		AE9613E31A6856830067F4C0 /* RSFNode+additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RSFNode+additions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,8 @@
 		AE87660C1A6459CE0013529B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AE9613E21A6856830067F4C0 /* RSFNode+additions.h */,
+				AE9613E31A6856830067F4C0 /* RSFNode+additions.m */,
 				AE0022321A65C0EA008B2B1B /* IDGenerator.h */,
 				AE0022331A65C0EA008B2B1B /* IDGenerator.m */,
 				AE00222F1A65BBC8008B2B1B /* RSFNodeSpec.h */,
@@ -313,6 +318,7 @@
 				AE8765DE1A64487B0013529B /* main.m in Sources */,
 				AE0022341A65C0EA008B2B1B /* IDGenerator.m in Sources */,
 				AE87660B1A6459C80013529B /* RSFNode.m in Sources */,
+				AE9613E41A6856830067F4C0 /* RSFNode+additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
