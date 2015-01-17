@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +16,77 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hxa-Ta-PCI">
+                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                <connections>
+                                    <action selector="sliderMoved:" destination="BYZ-38-t0r" eventType="valueChanged" id="Lre-pc-WkW"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tree 0:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="966-6H-IG8">
+                                <rect key="frame" x="16" y="20" width="568" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="knn-lr-r23">
+                                <rect key="frame" x="24" y="49" width="552" height="543"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hxa-Ta-PCI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="1Kz-1s-I8W"/>
+                            <constraint firstItem="hxa-Ta-PCI" firstAttribute="top" secondItem="knn-lr-r23" secondAttribute="bottom" constant="20" id="6UP-lz-Nl9">
+                                <variation key="heightClass=regular" constant="8"/>
+                            </constraint>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hxa-Ta-PCI" secondAttribute="bottom" constant="8" symbolic="YES" id="Bmx-Gb-8xc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hxa-Ta-PCI" secondAttribute="trailing" constant="8" id="Dw6-1M-fk5"/>
+                            <constraint firstItem="knn-lr-r23" firstAttribute="centerX" secondItem="966-6H-IG8" secondAttribute="centerX" id="OIf-Rb-0M9"/>
+                            <constraint firstItem="966-6H-IG8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="QgK-6J-ID6"/>
+                            <constraint firstAttribute="centerX" secondItem="hxa-Ta-PCI" secondAttribute="centerX" id="UaH-4K-7uD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="knn-lr-r23" secondAttribute="trailing" constant="8" id="fUU-IL-F18"/>
+                            <constraint firstItem="knn-lr-r23" firstAttribute="top" secondItem="966-6H-IG8" secondAttribute="bottom" constant="8" symbolic="YES" id="g37-G7-Lod"/>
+                            <constraint firstItem="966-6H-IG8" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="haF-xc-kmF"/>
+                            <constraint firstItem="966-6H-IG8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="iDm-oN-weq"/>
+                            <constraint firstItem="knn-lr-r23" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="pkg-zK-YXW"/>
+                            <constraint firstItem="knn-lr-r23" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="v4W-K8-Ay8"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="hxa-Ta-PCI"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="OIf-Rb-0M9"/>
+                                <exclude reference="v4W-K8-Ay8"/>
+                                <exclude reference="1Kz-1s-I8W"/>
+                                <exclude reference="6UP-lz-Nl9"/>
+                                <exclude reference="Dw6-1M-fk5"/>
+                                <exclude reference="UaH-4K-7uD"/>
+                                <exclude reference="Bmx-Gb-8xc"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="subviews">
+                                <include reference="hxa-Ta-PCI"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="1Kz-1s-I8W"/>
+                                <include reference="6UP-lz-Nl9"/>
+                                <include reference="Dw6-1M-fk5"/>
+                                <include reference="UaH-4K-7uD"/>
+                                <include reference="Bmx-Gb-8xc"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="treeLabel" destination="966-6H-IG8" id="xqG-2C-VgP"/>
+                        <outlet property="treeSlider" destination="hxa-Ta-PCI" id="NDd-tb-2KX"/>
+                        <outlet property="treeViewContaner" destination="knn-lr-r23" id="Cxu-H3-33k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="236" y="437.25"/>
         </scene>
     </scenes>
 </document>

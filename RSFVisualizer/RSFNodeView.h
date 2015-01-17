@@ -10,4 +10,5 @@
 
 @interface RSFNodeView : UIView
 @property (nonatomic) int nodeLabel;
+@property (nonatomic) double scaleFactor;
 @end

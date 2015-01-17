@@ -18,6 +18,7 @@
 -(void)setup
 {
   self.opaque = NO;
+  self.scaleFactor = 1.0;
 }
 
 -(id)initWithFrame:(CGRect)frame
@@ -41,29 +42,26 @@
   UIBezierPath *path = [[UIBezierPath alloc] init];
   
   CGPoint p = CGPointMake(self.bounds.origin.x + self.bounds.size.width/2.0, self.bounds.origin.y + self.bounds.size.height/2.0);
-  CGFloat r = MIN(self.bounds.size.width, self.bounds.size.height)/2.0*0.95;
+  CGFloat r = MIN(self.bounds.size.width, self.bounds.size.height)/2.0*0.92;
   
   path = [UIBezierPath bezierPathWithArcCenter:p radius:r startAngle:0 endAngle:2*M_PI clockwise:YES];
   [[UIColor blackColor] setStroke];
   [[UIColor yellowColor] setFill];
   [path setLineWidth:2.0];
   
-  
   [path fill];
   [path stroke];
   
   NSString *s = [NSString stringWithFormat:@"%d", self.nodeLabel];
-  CGSize labelSize = [s sizeWithAttributes:nil];
+  UIFont *f = [[UIFont preferredFontForTextStyle:s] fontWithSize:12.0*self.scaleFactor];
   
+  CGSize labelSize = [s sizeWithAttributes:@{NSFontAttributeName : f}];
+
   CGPoint labelp = p;
   labelp.x -= labelSize.width/2.0;
   labelp.y -= labelSize.height/2.0;
   
-  [s drawAtPoint:labelp withAttributes:nil];
-  
-//  UIBezierPath *border = [UIBezierPath bezierPathWithRect:self.bounds];
-//  [[UIColor blackColor] setStroke];
-//  [border stroke];
+  [s drawAtPoint:labelp withAttributes:@{NSFontAttributeName : f}];
 }
 
 @end

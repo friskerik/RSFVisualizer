@@ -33,6 +33,7 @@
   while ((rootNode = [self ReadRSFTree:idGen onLevel:0 withReader:fr])) {
     if (rootNode) {
       [trees addObject:rootNode];
+      [idGen reset];
     }
   }
   

@@ -17,4 +17,6 @@ typedef enum {NODE_ID, NODE_LEVEL} NodeLabel;
 @property (nonatomic) NodeLabel nodeLabel;
 
 +(CGSize)sizeOfLayoutFrame:(CGRect)layoutFrame;
++(CGSize)sizeOfGraph:(RSFNode *)rootNode;
+-(void)scaleToFit;
 @end

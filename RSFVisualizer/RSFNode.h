@@ -26,6 +26,7 @@ NodePosition NodePositionMake(double x, double y);
 @property (nonatomic) NodePosition pos;
 @property (nonatomic, strong) RSFNode *left;
 @property (nonatomic, strong) RSFNode *right;
+@property (nonatomic) bool hasLayout;
 
 -(void)layoutTree;
 

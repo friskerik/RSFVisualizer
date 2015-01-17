@@ -17,6 +17,8 @@ NodePositionMake(double x, double y)
   return pos;
 }
 
+@interface RSFNode()
+@end
 
 @implementation RSFNode
 
@@ -25,21 +27,12 @@ NodePositionMake(double x, double y)
 {
   self = [super init];
   if (self) {
-    self.pos = NodePositionMake(-1.0, -1.0);
+    self.hasLayout = NO;
   }
   return self;
 }
 
 #pragma mark - Utility functions
--(bool)hasLayout
-{
-  if (self.pos.x < 0 || self.pos.y < 0) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
 -(int)numberOfNodes
 {
   int n=1;
@@ -126,9 +119,10 @@ NodePositionMake(double x, double y)
   [self.right dumpLayout];
 }
 
-#define NODEDISTANCE 1.1
+#define NODEDISTANCE 1.2
 -(void)nodeLayout:(int)level
 {
+  self.hasLayout = YES;
   if ([self isLeaf]) {
     self.pos = NodePositionMake(0.0, (double)level);
   } else {
@@ -142,8 +136,8 @@ NodePositionMake(double x, double y)
     NSMutableArray *lc = [[NSMutableArray alloc] initWithCapacity:n-1];
     NSMutableArray *rc = [[NSMutableArray alloc] initWithCapacity:n-1];
     for (int ii=0; ii<n-1; ii++) {
-      [lc addObject:[NSNumber numberWithDouble:-1.0]];
-      [rc addObject:[NSNumber numberWithDouble:-1.0]];
+      [lc addObject:[NSNull null]];
+      [rc addObject:[NSNull null]];
     }
     
     // Compute contours for children
@@ -153,11 +147,12 @@ NodePositionMake(double x, double y)
     // Compute amount to shift right tree
     double minDistance = DBL_MAX;
     for (int ii=0; ii < n-1; ii++) {
-      if ([lc[ii] doubleValue]>=0.0 && [rc[ii] doubleValue]>=0.0) {
+//      if ([lc[ii] doubleValue]>=0.0 && [rc[ii] doubleValue]>=0.0) {
+      if (![lc[ii] isKindOfClass:[NSNull class]] && ![rc[ii] isKindOfClass:[NSNull class]]) {
         minDistance = MIN( minDistance, [lc[ii] doubleValue]-[rc[ii] doubleValue] );
       }
     }
-    
+
     // Shift right tree
     [self.right shiftNodesRight:NODEDISTANCE - minDistance];
     
@@ -175,7 +170,7 @@ NodePositionMake(double x, double y)
 
 -(void)leftContour:(NSMutableArray *)c onLevel:(int)level
 {
-  if ([c[level] doubleValue] >= 0.0) {
+  if (![c[level] isKindOfClass:[NSNull class]]) {
     c[level] = [NSNumber numberWithDouble:MIN([c[level] doubleValue],self.pos.x)];
   } else {
     c[level] = [NSNumber numberWithDouble:self.pos.x];
@@ -187,7 +182,7 @@ NodePositionMake(double x, double y)
 
 -(void)rightContour:(NSMutableArray *)c onLevel:(int)level
 {
-  if ([c[level] doubleValue] >= 0.0) {
+  if (![c[level] isKindOfClass:[NSNull class]]) {
     c[level] = [NSNumber numberWithDouble:MAX([c[level] doubleValue],self.pos.x)];
   } else {
     c[level] = [NSNumber numberWithDouble:self.pos.x];

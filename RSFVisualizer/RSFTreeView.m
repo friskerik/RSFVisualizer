@@ -9,27 +9,15 @@
 #import "RSFTreeView.h"
 #import "RSFNodeView.h"
 #import "RSFNode.h"
+#import "RSFNode+additions.h"
+
+@interface RSFTreeView()
+@property (nonatomic) double scaleFactor;
+@end
 
 @implementation RSFTreeView
 
--(void)setRootNode:(RSFNode *)rootNode
-{
-  for (UIView *v in self.subviews) {
-    [v removeFromSuperview];
-  }
-  
-  _rootNode = rootNode;
-  [self layoutNodes:_rootNode];
-  [self setNeedsDisplay];
-}
-
--(void)setNodeLabel:(NodeLabel)nodeLabel
-{
-  _nodeLabel = nodeLabel;
-  [self layoutNodes:self.rootNode];
-  [self setNeedsDisplay];
-}
-
+#pragma mark - Initializers
 -(void)awakeFromNib
 {
   [self setup];
@@ -39,7 +27,7 @@
 {
   self = [super initWithFrame:frame];
   [self setup];
-
+  
   return self;
 }
 
@@ -48,13 +36,50 @@
   self.opaque = NO;
   self.drawBorder = NO;
   self.nodeLabel = NODE_ID;
+  self.scaleFactor = 1.0;
   
   if (self.rootNode) {
     [self layoutNodes:self.rootNode];
   }
 }
 
+#pragma mark - Setters and getters
+-(void)setRootNode:(RSFNode *)rootNode
+{
+  _rootNode = rootNode;
+  if (![rootNode hasLayout]) {
+    [rootNode layoutTree];
+  }
+  [self layoutNodes:_rootNode];
+  [self setNeedsDisplay];
+}
 
+-(void)setNodeLabel:(NodeLabel)nodeLabel
+{
+  _nodeLabel = nodeLabel;
+  [self removeAllNodesFromView];
+  [self layoutNodes:self.rootNode];
+  [self setNeedsDisplay];
+}
+
+
+#pragma mark - Set scale to fit bounds
+-(void)scaleToFit
+{
+  if (self.rootNode) {
+    CGSize graphSize = [RSFTreeView sizeOfGraph:self.rootNode];
+    
+    self.scaleFactor = self.bounds.size.width/graphSize.width;
+    self.scaleFactor = MIN(self.scaleFactor, self.bounds.size.height/graphSize.height);
+    self.scaleFactor = MIN(self.scaleFactor, 1.0);
+    
+    [self removeAllNodesFromView];
+    [self layoutNodes:self.rootNode];
+    [self setNeedsDisplay];
+  }
+}
+
+#pragma mark - Drawing utility functions
 #define NODE_RADIUS 15
 #define X_MARGIN 0 // Percent of a node diameter
 #define Y_MARGIN 0
@@ -65,19 +90,29 @@
 {
   CGPoint p;
   
-  p.x = pos.x*X_SCALE*NODE_RADIUS*2.0 + NODE_RADIUS + X_MARGIN*NODE_RADIUS*2.0;
-  p.y = self.bounds.size.height - (pos.y*Y_SCALE*NODE_RADIUS*2.0 + NODE_RADIUS) - Y_MARGIN*NODE_RADIUS*2.0;
+  p.x = (pos.x*X_SCALE*NODE_RADIUS*2.0 + NODE_RADIUS + X_MARGIN*NODE_RADIUS*2.0)*self.scaleFactor;
+  p.y = self.bounds.size.height - ((pos.y*Y_SCALE*NODE_RADIUS*2.0 + NODE_RADIUS) - Y_MARGIN*NODE_RADIUS*2.0)*self.scaleFactor;
 
   return p;
 }
 
+#pragma mark - Layout nodes
+-(void)removeAllNodesFromView
+{
+  for (UIView *v in self.subviews) {
+    [v removeFromSuperview];
+  }
+}
+
+
 -(void)layoutNodes:(RSFNode *)node
 {
   CGPoint nodePos = [self screenPoint:node.pos];
-  CGRect nodeRect = CGRectMake(nodePos.x-NODE_RADIUS, nodePos.y-NODE_RADIUS, NODE_RADIUS*2.0, NODE_RADIUS*2.0);
+  CGRect nodeRect = CGRectMake(nodePos.x-self.scaleFactor*NODE_RADIUS, nodePos.y-self.scaleFactor*NODE_RADIUS, self.scaleFactor*NODE_RADIUS*2.0, self.scaleFactor*NODE_RADIUS*2.0);
 
   RSFNodeView *v = [[RSFNodeView alloc] initWithFrame:nodeRect];
-
+  v.scaleFactor = self.scaleFactor;
+  
   switch (self.nodeLabel) {
     case NODE_ID:
       v.nodeLabel = node.nodeId;
@@ -98,7 +133,7 @@
   }
 }
 
-
+#pragma mark - Draw arrows
 #define ARROW_BARB_ANGLE 20.0*M_PI/180.0
 #define ARROW_BARB_LENGTH 8
 -(void)drawArrowFrom:(CGPoint)p1 to:(CGPoint)p2
@@ -125,6 +160,7 @@
   bv.y = bv.y/normFact*ARROW_BARB_LENGTH;
   [arrow addLineToPoint:CGPointMake(p2.x-bv.x, p2.y-bv.y)];
   [arrow closePath];
+  
   [arrow stroke];
   [arrow fill];
 }
@@ -135,6 +171,7 @@
   return v2;
 }
 
+#pragma mark - Draw edges
 -(void)drawEdge:(RSFNode *)n1 to:(RSFNode *)n2
 {
   CGPoint p1 = [self screenPoint:n1.pos];
@@ -147,8 +184,8 @@
   
   v.x = p2.x-p1.x; v.y = p2.y - p1.y;
   phi = atan2(-v.x, v.y);
-  dx  = sin(phi)*NODE_RADIUS;
-  dy  = cos(phi)*NODE_RADIUS;
+  dx  = sin(phi)*NODE_RADIUS*self.scaleFactor;
+  dy  = cos(phi)*NODE_RADIUS*self.scaleFactor;
   
   r1.x = p1.x - dx; r1.y = p1.y + dy;
   r2.x = p2.x + dx; r2.y = p2.y - dy;
@@ -168,17 +205,28 @@
   }
 }
 
+#pragma mark - Main draw rect
 - (void)drawRect:(CGRect)rect
 {
   if (self.rootNode) {
     [self drawEdges:self.rootNode];
   }
   if (self.drawBorder) {
-    UIBezierPath  *border = [UIBezierPath bezierPathWithRect:self.bounds];
+    UIBezierPath *border = [UIBezierPath bezierPathWithRect:self.bounds];
     [[UIColor blackColor] setStroke];
     [border stroke];
   }
 }
+
+#pragma mark - Graph size determination utility functions
++(CGSize)sizeOfGraph:(RSFNode *)rootNode
+{
+  if (![rootNode hasLayout]) {
+    [rootNode layoutTree];
+  }
+  return [RSFTreeView sizeOfLayoutFrame:[RSFNode computeLayoutFrame:rootNode]];
+}
+
 
 +(CGSize)sizeOfLayoutFrame:(CGRect)layoutFrame
 {
