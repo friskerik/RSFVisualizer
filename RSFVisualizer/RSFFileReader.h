@@ -13,8 +13,12 @@
 
 @interface RSFFileReader : NSObject
 @property (nonatomic, strong) NSString *rsfFilePath;
+@property (nonatomic, strong) NSString *xmlFilePath;
+@property (nonatomic, strong) NSArray  *variableNames;
 
 -(void)skipHeader;
 -(NSString *)readOneLine;
 -(RSFNodeSpec *)readRSFEntry:(IDGenerator *)idGen;
+-(NSDictionary *)GetRSFFilesInDocumentsDirectory;
+
 @end

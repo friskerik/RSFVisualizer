@@ -13,6 +13,8 @@
 
 @interface RSF : NSObject
 @property (nonatomic, strong) NSString *rsfName;
+@property (nonatomic, strong) NSDictionary *rsfFileInfo;
 @property (nonatomic, strong) NSArray *trees;
+@property (nonatomic, strong) NSArray *variableNames;
 
 @end

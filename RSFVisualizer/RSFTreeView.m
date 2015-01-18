@@ -54,7 +54,7 @@
   [self setNeedsDisplay];
 }
 
--(void)setNodeLabel:(NodeLabel)nodeLabel
+-(void)setNodeLabel:(NodeLabelType)nodeLabel
 {
   _nodeLabel = nodeLabel;
   [self removeAllNodesFromView];

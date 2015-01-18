@@ -10,20 +10,68 @@
 
 @interface RSF()
 @property (nonatomic, strong) NSString *rsfTxtFileName;
+@property (nonatomic, strong) NSString *rsfXMLFileName;
 @end
 
 @implementation RSF
+
+-(void)setRsfFileInfo:(NSDictionary *)rsfFileInfo
+{
+  _rsfFileInfo = rsfFileInfo;
+  
+  NSURL *txtURL = [rsfFileInfo objectForKey:@"txt"];
+  NSURL *xmlURL = [rsfFileInfo objectForKey:@"xml"];
+  
+  NSString *rsfFilePath = [txtURL path];
+  NSString *xmlFilePath = [xmlURL path];
+  
+  RSFFileReader *fr = [[RSFFileReader alloc] init];
+  
+  // Hande XML file
+  fr.xmlFilePath = xmlFilePath; // reads and parses xml file
+  self.variableNames = fr.variableNames;
+  
+  // Handle graph definition file
+  fr.rsfFilePath = rsfFilePath; // reads file into buffer
+  
+  // Generate tree representation from data
+  [fr skipHeader]; // Skip the first line, header
+  IDGenerator *idGen = [[IDGenerator alloc] init];
+  
+  NSMutableArray *trees = [[NSMutableArray alloc] init];
+  RSFNode *rootNode;
+  
+  while ((rootNode = [self ReadRSFTree:idGen onLevel:0 withReader:fr])) {
+    if (rootNode) {
+      [trees addObject:rootNode];
+      [idGen reset];
+    }
+  }
+  
+  self.trees = trees;
+  
+}
 
 -(void)setRsfName:(NSString *)rsfName
 {
   _rsfName = rsfName;
   
-  self.rsfTxtFileName = [rsfName stringByAppendingString:@".txt"];
+  NSString *rsfTxtFileName = [rsfName stringByAppendingString:@".txt"];
+  NSString *rsfXMLFileName = [rsfName stringByAppendingString:@".xml"];
   
-  NSString *rsfFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:self.rsfTxtFileName];
+  NSString *rsfFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:rsfTxtFileName];
+  NSString *xmlFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:rsfXMLFileName];
+
   RSFFileReader *fr = [[RSFFileReader alloc] init];
+
+  // Hande XML file
+  fr.xmlFilePath = xmlFilePath; // reads and parses xml file
+  self.variableNames = fr.variableNames;
+  
+  // Handle graph definition file
   fr.rsfFilePath = rsfFilePath; // reads file into buffer
   
+  // Generate tree representation from data
   [fr skipHeader]; // Skip the first line, header
   IDGenerator *idGen = [[IDGenerator alloc] init];
   
@@ -39,6 +87,8 @@
   
   self.trees = trees;
 }
+
+
 
 -(RSFNode *)ReadRSFTree:(IDGenerator *)idGen onLevel:(int)level withReader:(RSFFileReader *)fr
 {

@@ -8,13 +8,101 @@
 
 #import "RSFFileReader.h"
 
-@interface RSFFileReader()
+@interface RSFFileReader() <NSXMLParserDelegate>
 @property (nonatomic, strong) NSData *data;
 @property (nonatomic) int idx;
+@property (nonatomic, strong) NSMutableArray *vars;
 @end
 
 @implementation RSFFileReader
 
+#pragma mark - Search directory for RSF files
+
+-(NSDictionary *)GetRSFFilesInDocumentsDirectory
+{
+  NSMutableDictionary *r;
+  
+  NSFileManager *fileMgr = [NSFileManager defaultManager];
+  NSArray *documentsURLs = [fileMgr URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+  NSURL *documentURL;
+
+  if ([documentsURLs count]>0) {
+    // Read contents of Documents directory
+    NSError *errorMsg;
+    documentURL = [documentsURLs objectAtIndex:0];
+    NSArray *directoryContent = [fileMgr contentsOfDirectoryAtURL:documentURL includingPropertiesForKeys:@[NSURLNameKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:&errorMsg];
+    
+    if (directoryContent) {
+      // Found something
+      r = [[NSMutableDictionary alloc] init];
+      
+      // Collect all RSF-files in a dictionary with key: rsfName, objects are in the form {@"txt" : (NSURL *), @"xml" : (NSURL *)}
+      for (NSURL *fileURL in directoryContent) {
+        NSString *fileExtension = [fileURL pathExtension];
+        if (([fileExtension isEqualToString:@"txt"] || [fileExtension isEqualToString:@"xml"])) {
+          NSString *rsfName = [[fileURL lastPathComponent] stringByDeletingPathExtension];
+          NSMutableDictionary *rsfObject = [r objectForKey:rsfName];
+          if (!rsfObject) {
+            rsfObject = [@{fileExtension : fileURL} mutableCopy];
+            [r setObject:rsfObject forKey:rsfName];
+          } else {
+            [rsfObject setObject:fileURL forKey:fileExtension];
+          }
+        }
+      }
+
+      // See which RSF files that have both txt and xml file present in the documents directory
+      NSEnumerator *enumerator = [r keyEnumerator];
+      id key;
+      while ((key = [enumerator nextObject])) {
+        NSDictionary *dicObj = (NSDictionary *)[r objectForKey:key];
+        NSURL *txtURL = [dicObj objectForKey:@"txt"];
+        NSURL *xmlURL = [dicObj objectForKey:@"xml"];
+        
+        if( !txtURL || !xmlURL ) {
+          // Both files not present, remove
+          [r removeObjectForKey:key];
+        }
+      }
+    } else {
+      NSLog(@"Error reading documents directory\n%@", errorMsg);
+    }
+  } else {
+    NSLog(@"Did not find any document directory!\n");
+  }
+  
+  return r;
+}
+
+#pragma mark - Read XML file
+-(void)setXmlFilePath:(NSString *)xmlFilePath
+{
+//  NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:xmlFilePath]];
+
+  NSData *xmlData = [NSData dataWithContentsOfFile:xmlFilePath];
+  NSXMLParser *parser = [[NSXMLParser alloc] initWithData:xmlData];
+  parser.delegate = self;
+  
+  self.vars = [[NSMutableArray alloc] init];
+  [parser parse];
+}
+
+-(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
+                                       namespaceURI:(NSString *)namespaceURI
+                                      qualifiedName:(NSString *)qName
+                                         attributes:(NSDictionary *)attributeDict
+{
+  if ([elementName isEqual:@"DataField"]) {
+    [self.vars addObject:[attributeDict objectForKey:@"name"]];
+  }
+}
+
+-(void)parserDidEndDocument:(NSXMLParser *)parser
+{
+  self.variableNames = self.vars;
+}
+
+#pragma mark - Read txt file
 -(void)setRsfFilePath:(NSString *)rsfFilePath
 {
   _rsfFilePath = rsfFilePath;

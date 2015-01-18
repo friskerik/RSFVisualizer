@@ -15,6 +15,8 @@
 		AE0022371A65C4FA008B2B1B /* RSF.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0022361A65C4FA008B2B1B /* RSF.m */; };
 		AE00223A1A65CD21008B2B1B /* fleet.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE0022381A65CD21008B2B1B /* fleet.txt */; };
 		AE00223B1A65CD21008B2B1B /* fleet.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE0022391A65CD21008B2B1B /* fleet.xml */; };
+		AE67E1601A6B23F000DC5FA9 /* rsf_200.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE67E15E1A6B23F000DC5FA9 /* rsf_200.txt */; };
+		AE67E1611A6B23F000DC5FA9 /* rsf_200.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE67E15F1A6B23F000DC5FA9 /* rsf_200.xml */; };
 		AE8765DE1A64487B0013529B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8765DD1A64487B0013529B /* main.m */; };
 		AE8765E11A64487B0013529B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8765E01A64487B0013529B /* AppDelegate.m */; };
 		AE8765E41A64487B0013529B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8765E31A64487B0013529B /* ViewController.m */; };
@@ -51,6 +53,8 @@
 		AE0022361A65C4FA008B2B1B /* RSF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSF.m; sourceTree = "<group>"; };
 		AE0022381A65CD21008B2B1B /* fleet.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fleet.txt; sourceTree = "<group>"; };
 		AE0022391A65CD21008B2B1B /* fleet.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fleet.xml; sourceTree = "<group>"; };
+		AE67E15E1A6B23F000DC5FA9 /* rsf_200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rsf_200.txt; sourceTree = "<group>"; };
+		AE67E15F1A6B23F000DC5FA9 /* rsf_200.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = rsf_200.xml; sourceTree = "<group>"; };
 		AE8765D81A64487B0013529B /* RSFVisualizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSFVisualizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8765DC1A64487B0013529B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE8765DD1A64487B0013529B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -99,6 +103,8 @@
 				AE0022281A65A954008B2B1B /* fleet1.xml */,
 				AE0022381A65CD21008B2B1B /* fleet.txt */,
 				AE0022391A65CD21008B2B1B /* fleet.xml */,
+				AE67E15E1A6B23F000DC5FA9 /* rsf_200.txt */,
+				AE67E15F1A6B23F000DC5FA9 /* rsf_200.xml */,
 			);
 			name = RSFFiles;
 			sourceTree = "<group>";
@@ -289,8 +295,10 @@
 				AE8765EC1A64487B0013529B /* LaunchScreen.xib in Resources */,
 				AE00223A1A65CD21008B2B1B /* fleet.txt in Resources */,
 				AE00222A1A65A954008B2B1B /* fleet1.xml in Resources */,
+				AE67E1601A6B23F000DC5FA9 /* rsf_200.txt in Resources */,
 				AE8765E91A64487B0013529B /* Images.xcassets in Resources */,
 				AE00223B1A65CD21008B2B1B /* fleet.xml in Resources */,
+				AE67E1611A6B23F000DC5FA9 /* rsf_200.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

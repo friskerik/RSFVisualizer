@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "RSFNode.h"
 
-typedef enum {NODE_ID, NODE_LEVEL} NodeLabel;
+typedef enum {NODE_ID, NODE_LEVEL} NodeLabelType;
 
 @interface RSFTreeView : UIView
 @property (nonatomic, weak) RSFNode *rootNode;
+@property (nonatomic, weak) NSArray *variableNames; // of NSString *
+
 @property (nonatomic) BOOL drawBorder;
-@property (nonatomic) NodeLabel nodeLabel;
+@property (nonatomic) NodeLabelType nodeLabel;
 
 +(CGSize)sizeOfLayoutFrame:(CGRect)layoutFrame;
 +(CGSize)sizeOfGraph:(RSFNode *)rootNode;
