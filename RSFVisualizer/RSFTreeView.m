@@ -104,12 +104,18 @@
   }
 }
 
+-(CGRect)nodeRectOnScreen:(RSFNode *)node
+{
+  CGPoint nodePos = [self screenPoint:node.pos];
+  return CGRectMake(nodePos.x-self.scaleFactor*NODE_RADIUS, nodePos.y-self.scaleFactor*NODE_RADIUS, self.scaleFactor*NODE_RADIUS*2.0, self.scaleFactor*NODE_RADIUS*2.0);
+}
 
 -(void)layoutNodes:(RSFNode *)node
 {
-  CGPoint nodePos = [self screenPoint:node.pos];
-  CGRect nodeRect = CGRectMake(nodePos.x-self.scaleFactor*NODE_RADIUS, nodePos.y-self.scaleFactor*NODE_RADIUS, self.scaleFactor*NODE_RADIUS*2.0, self.scaleFactor*NODE_RADIUS*2.0);
+//  CGRect nodeRect = CGRectMake(nodePos.x-self.scaleFactor*NODE_RADIUS, nodePos.y-self.scaleFactor*NODE_RADIUS, self.scaleFactor*NODE_RADIUS*2.0, self.scaleFactor*NODE_RADIUS*2.0);
 
+  CGRect nodeRect = [self nodeRectOnScreen:node];
+  
   RSFNodeView *v = [[RSFNodeView alloc] initWithFrame:nodeRect];
   v.scaleFactor = self.scaleFactor;
   
@@ -147,8 +153,8 @@
   // Draw arrowhead
   CGPoint bv = [self rotateVector:CGPointMake(p2.x-p1.x, p2.y-p1.y) angle:ARROW_BARB_ANGLE];
   double normFact = sqrt(bv.x*bv.x+bv.y*bv.y);
-  bv.x = bv.x/normFact*ARROW_BARB_LENGTH;
-  bv.y = bv.y/normFact*ARROW_BARB_LENGTH;
+  bv.x = bv.x/normFact*ARROW_BARB_LENGTH*self.scaleFactor;
+  bv.y = bv.y/normFact*ARROW_BARB_LENGTH*self.scaleFactor;
   
   [arrow removeAllPoints];
   [arrow moveToPoint:CGPointMake(p2.x-bv.x, p2.y-bv.y)];
@@ -156,8 +162,8 @@
   
   bv = [self rotateVector:CGPointMake(p2.x-p1.x, p2.y-p1.y) angle:-ARROW_BARB_ANGLE];
   normFact = sqrt(bv.x*bv.x+bv.y*bv.y);
-  bv.x = bv.x/normFact*ARROW_BARB_LENGTH;
-  bv.y = bv.y/normFact*ARROW_BARB_LENGTH;
+  bv.x = bv.x/normFact*ARROW_BARB_LENGTH*self.scaleFactor;
+  bv.y = bv.y/normFact*ARROW_BARB_LENGTH*self.scaleFactor;
   [arrow addLineToPoint:CGPointMake(p2.x-bv.x, p2.y-bv.y)];
   [arrow closePath];
   

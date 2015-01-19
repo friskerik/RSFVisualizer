@@ -47,7 +47,7 @@
   path = [UIBezierPath bezierPathWithArcCenter:p radius:r startAngle:0 endAngle:2*M_PI clockwise:YES];
   [[UIColor blackColor] setStroke];
   [[UIColor yellowColor] setFill];
-  [path setLineWidth:2.0];
+  [path setLineWidth:2.0*self.bounds.size.width/30.0]; // 2.0 linewidth when radius is 15 points
   
   [path fill];
   [path stroke];
