@@ -158,6 +158,7 @@
     RSFTreeView *treeView = [[RSFTreeView alloc] initWithFrame:treeRect];
 
     // Configure rendering
+    treeView.drawBorder = YES;
     treeView.nodeLabel = NODE_LEVEL;
     treeView.rootNode = self.rootNode;
     treeView.variableNames = self.rsf.variableNames;

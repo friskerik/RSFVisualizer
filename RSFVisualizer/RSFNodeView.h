@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RSFNode.h"
 
 @interface RSFNodeView : UIView
 @property (nonatomic) int nodeLabel;
 @property (nonatomic) double scaleFactor;
+@property (nonatomic, weak) RSFNode *node;
 @end

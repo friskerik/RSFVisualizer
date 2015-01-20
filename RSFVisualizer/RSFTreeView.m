@@ -13,6 +13,8 @@
 
 @interface RSFTreeView()
 @property (nonatomic) double scaleFactor;
+@property (nonatomic, strong) NSDictionary *nodeInformationStyle;
+@property (nonatomic) CGFloat heightOfNodeInformation;
 @end
 
 @implementation RSFTreeView
@@ -37,11 +39,29 @@
   self.drawBorder = NO;
   self.nodeLabel = NODE_ID;
   self.scaleFactor = 1.0;
-  
+  [self resetNodeInformationStyle];
+
   if (self.rootNode) {
     [self layoutNodes:self.rootNode];
   }
+  
+  UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+  [self addGestureRecognizer:tapGestureRecognizer];
 }
+
+-(void)tap:(UITapGestureRecognizer *)gesture
+{
+  if (gesture.state == UIGestureRecognizerStateEnded) {
+    CGPoint p = [gesture locationInView:self];
+    for (UIView *v in self.subviews) {
+      if( CGRectContainsPoint(v.frame, p) ) {
+        RSFNodeView *nv = (RSFNodeView *)v;
+        NSLog(@"Tap on node with id %d\n", nv.node.nodeId);
+      }
+    }
+  }
+}
+
 
 #pragma mark - Setters and getters
 -(void)setRootNode:(RSFNode *)rootNode
@@ -62,6 +82,15 @@
   [self setNeedsDisplay];
 }
 
+-(void)resetNodeInformationStyle
+{
+  NSString *nodeInformation = [NSString stringWithFormat:@"v%d : %.2f", 0, 0.0]; // dummy node information string
+  UIFont *f = [[UIFont preferredFontForTextStyle:nodeInformation] fontWithSize:10.0*self.scaleFactor];
+  self.nodeInformationStyle = @{NSBackgroundColorAttributeName  : [UIColor whiteColor], NSForegroundColorAttributeName : [UIColor blueColor], NSFontAttributeName : f};
+  CGSize nodeInfoSize = [nodeInformation sizeWithAttributes:self.nodeInformationStyle];
+  self.heightOfNodeInformation = nodeInfoSize.height;
+  NSLog(@"%f\n", self.heightOfNodeInformation);
+}
 
 #pragma mark - Set scale to fit bounds
 -(void)scaleToFit
@@ -72,6 +101,7 @@
     self.scaleFactor = self.bounds.size.width/graphSize.width;
     self.scaleFactor = MIN(self.scaleFactor, self.bounds.size.height/graphSize.height);
     self.scaleFactor = MIN(self.scaleFactor, 1.0);
+    [self resetNodeInformationStyle];
     
     [self removeAllNodesFromView];
     [self layoutNodes:self.rootNode];
@@ -84,7 +114,7 @@
 #define X_MARGIN 0 // Percent of a node diameter
 #define Y_MARGIN 0
 #define X_SCALE 1.7
-#define Y_SCALE 1.7
+#define Y_SCALE 2.2
 
 -(CGPoint)screenPoint:(NodePosition)pos
 {
@@ -112,12 +142,11 @@
 
 -(void)layoutNodes:(RSFNode *)node
 {
-//  CGRect nodeRect = CGRectMake(nodePos.x-self.scaleFactor*NODE_RADIUS, nodePos.y-self.scaleFactor*NODE_RADIUS, self.scaleFactor*NODE_RADIUS*2.0, self.scaleFactor*NODE_RADIUS*2.0);
-
   CGRect nodeRect = [self nodeRectOnScreen:node];
   
   RSFNodeView *v = [[RSFNodeView alloc] initWithFrame:nodeRect];
   v.scaleFactor = self.scaleFactor;
+  v.node = node;
   
   switch (self.nodeLabel) {
     case NODE_ID:
@@ -216,11 +245,30 @@
 {
   if (self.rootNode) {
     [self drawEdges:self.rootNode];
+    [self drawVariableInformation:self.rootNode];
   }
   if (self.drawBorder) {
     UIBezierPath *border = [UIBezierPath bezierPathWithRect:self.bounds];
     [[UIColor blackColor] setStroke];
     [border stroke];
+  }
+}
+
+#pragma mark - Draw variable information
+#define VAR_INFO_SPACING_FACTOR 0.3
+-(void)drawVariableInformation:(RSFNode *)node
+{
+  if (node) {
+    CGRect nodeRect = [self nodeRectOnScreen:node];
+    NSString *nodeInformation = [NSString stringWithFormat:@"v%d : %.2f", node.variableIdx+1, node.splitValue];
+
+    CGSize nodeInfoSize = [nodeInformation sizeWithAttributes:self.nodeInformationStyle];
+  
+    CGPoint p = CGPointMake(nodeRect.origin.x + nodeRect.size.width/2.0 - nodeInfoSize.width/2.0, nodeRect.origin.y-VAR_INFO_SPACING_FACTOR*2.0*NODE_RADIUS*self.scaleFactor-nodeInfoSize.height);
+    [nodeInformation drawAtPoint:p withAttributes:self.nodeInformationStyle];
+    
+    [self drawVariableInformation:node.left];
+    [self drawVariableInformation:node.right];
   }
 }
 
@@ -230,7 +278,10 @@
   if (![rootNode hasLayout]) {
     [rootNode layoutTree];
   }
-  return [RSFTreeView sizeOfLayoutFrame:[RSFNode computeLayoutFrame:rootNode]];
+  CGSize graphSize = [RSFTreeView sizeOfLayoutFrame:[RSFNode computeLayoutFrame:rootNode]];
+  graphSize.height = graphSize.height;
+
+  return graphSize;
 }
 
 
