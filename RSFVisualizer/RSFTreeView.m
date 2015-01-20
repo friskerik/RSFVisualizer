@@ -37,31 +37,15 @@
 {
   self.opaque = NO;
   self.drawBorder = NO;
+  self.legend = YES;
   self.nodeLabel = NODE_ID;
   self.scaleFactor = 1.0;
   [self resetNodeInformationStyle];
 
   if (self.rootNode) {
     [self layoutNodes:self.rootNode];
-  }
-  
-  UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-  [self addGestureRecognizer:tapGestureRecognizer];
+  }  
 }
-
--(void)tap:(UITapGestureRecognizer *)gesture
-{
-  if (gesture.state == UIGestureRecognizerStateEnded) {
-    CGPoint p = [gesture locationInView:self];
-    for (UIView *v in self.subviews) {
-      if( CGRectContainsPoint(v.frame, p) ) {
-        RSFNodeView *nv = (RSFNodeView *)v;
-        NSLog(@"Tap on node with id %d\n", nv.node.nodeId);
-      }
-    }
-  }
-}
-
 
 #pragma mark - Setters and getters
 -(void)setRootNode:(RSFNode *)rootNode
@@ -89,7 +73,12 @@
   self.nodeInformationStyle = @{NSBackgroundColorAttributeName  : [UIColor whiteColor], NSForegroundColorAttributeName : [UIColor blueColor], NSFontAttributeName : f};
   CGSize nodeInfoSize = [nodeInformation sizeWithAttributes:self.nodeInformationStyle];
   self.heightOfNodeInformation = nodeInfoSize.height;
-  NSLog(@"%f\n", self.heightOfNodeInformation);
+}
+
+-(void)setLegend:(BOOL)legend
+{
+  _legend = legend;
+  [self setNeedsDisplay];
 }
 
 #pragma mark - Set scale to fit bounds
@@ -255,12 +244,17 @@
 }
 
 #pragma mark - Draw variable information
-#define VAR_INFO_SPACING_FACTOR 0.3
+#define VAR_INFO_SPACING_FACTOR 0.28
 -(void)drawVariableInformation:(RSFNode *)node
 {
-  if (node) {
+  if (node && node.variableIdx>0) {
     CGRect nodeRect = [self nodeRectOnScreen:node];
-    NSString *nodeInformation = [NSString stringWithFormat:@"v%d : %.2f", node.variableIdx+1, node.splitValue];
+    NSString *nodeInformation;
+    if (self.legend) {
+      nodeInformation = [NSString stringWithFormat:@"v%d : %.2f", node.variableIdx, node.splitValue];
+    } else {
+      nodeInformation = [NSString stringWithFormat:@"%@ : %.2f", self.variableNames[node.variableIdx-1], node.splitValue];
+    }
 
     CGSize nodeInfoSize = [nodeInformation sizeWithAttributes:self.nodeInformationStyle];
   
@@ -279,7 +273,12 @@
     [rootNode layoutTree];
   }
   CGSize graphSize = [RSFTreeView sizeOfLayoutFrame:[RSFNode computeLayoutFrame:rootNode]];
-  graphSize.height = graphSize.height;
+
+  NSString *nodeInformation = [NSString stringWithFormat:@"v%d : %.2f", 0, 0.0]; // dummy node information string
+  UIFont *f = [[UIFont preferredFontForTextStyle:nodeInformation] fontWithSize:10.0];
+  
+  CGSize nodeInfoSize = [nodeInformation sizeWithAttributes:@{NSBackgroundColorAttributeName  : [UIColor whiteColor], NSForegroundColorAttributeName : [UIColor blueColor], NSFontAttributeName : f}];
+  graphSize.height = graphSize.height + nodeInfoSize.height + VAR_INFO_SPACING_FACTOR*2.0*NODE_RADIUS;
 
   return graphSize;
 }

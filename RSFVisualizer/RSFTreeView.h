@@ -16,9 +16,9 @@ typedef enum {NODE_ID, NODE_LEVEL} NodeLabelType;
 @property (nonatomic, weak) NSArray *variableNames; // of NSString *
 
 @property (nonatomic) BOOL drawBorder;
+@property (nonatomic) BOOL legend;
 @property (nonatomic) NodeLabelType nodeLabel;
 
-+(CGSize)sizeOfLayoutFrame:(CGRect)layoutFrame;
 +(CGSize)sizeOfGraph:(RSFNode *)rootNode;
 -(void)scaleToFit;
 @end
