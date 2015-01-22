@@ -192,8 +192,19 @@
   CGPoint p = [gesture locationInView:view];
   RSFNode *tappedNode = [view tappedNode:p];
   
-  if (tappedNode) {
-    NSLog(@"Tapped on node with id %d\n", tappedNode.nodeId);
+  if (tappedNode && ![tappedNode isLeaf]) {
+    NSString *alertTitle = self.rsf.variableNames[tappedNode.variableIdx-1];
+    NSString *alertMessage = [NSString stringWithFormat:@"split value = %f", tappedNode.splitValue];
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                                                   message:alertMessage
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
   }
 }
 
