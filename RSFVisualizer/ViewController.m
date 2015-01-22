@@ -42,8 +42,8 @@
   RSFFileReader *rsfFilereader = [[RSFFileReader alloc] init];
   NSDictionary *rsfFiles = [rsfFilereader GetRSFFilesInDocumentsDirectory];
 
-  NSString *key = @"rsf_200";
-//  NSString *key = @"fleet";
+//  NSString *key = @"rsf_200";
+  NSString *key = @"fleet";
   
   [self setup:key withURLs:[rsfFiles objectForKey:key]]; // Search files in the document folder
 //  [self setup:key withURLs:nil]; // Search fil in the resources
