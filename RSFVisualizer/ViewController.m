@@ -42,8 +42,8 @@
   RSFFileReader *rsfFilereader = [[RSFFileReader alloc] init];
   NSDictionary *rsfFiles = [rsfFilereader GetRSFFilesInDocumentsDirectory];
 
-//  NSString *key = @"rsf_200";
-  NSString *key = @"fleet";
+  NSString *key = @"rsf_200";
+//  NSString *key = @"fleet";
   
   [self setup:key withURLs:[rsfFiles objectForKey:key]]; // Search files in the document folder
 //  [self setup:key withURLs:nil]; // Search fil in the resources
@@ -71,6 +71,21 @@
   }
 }
 
+- (IBAction)legendSwitch:(UISwitch *)sender
+{
+  if (self.treeViewContainer.subviews[0]) {
+    RSFTreeView *v = self.treeViewContainer.subviews[0];
+    v.legend = sender.on;
+  }
+}
+- (IBAction)sliderMoved:(UISlider *)sender
+{
+  if (sender.value-1 != self.currentTreeIdx) {
+    self.currentTreeIdx = self.treeSlider.value - 1;
+    [self showTree:self.currentTreeIdx];
+  }
+}
+
 #pragma mark - Main setup, read RSF files
 -(void)setup:(NSString *)rsfName withURLs:(NSDictionary *)rsfFileURLs
 {
@@ -91,56 +106,11 @@
     self.maxValueLabel.text = [NSString stringWithFormat:@"%d", (int)[self.rsf.trees count]];
     
     self.title = [@"Random Survival Forest: " stringByAppendingString:rsfName];
-    
-    // Add gesture recognizers
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
-    swipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.treeViewContainer addGestureRecognizer:swipe];
-    swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
-    swipe.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.treeViewContainer addGestureRecognizer:swipe];
-    
   } else {
     NSLog(@"Error reading tree %@\n", rsfName);
   }
 }
 
-#pragma mark - Gesture handler och interface action handlers
--(void)swipe:(UIGestureRecognizer *)gesture
-{
-  if (gesture.state==UIGestureRecognizerStateEnded) {
-    if ([gesture isKindOfClass:[UISwipeGestureRecognizer class]]) {
-      UISwipeGestureRecognizer *swipeGesture = (UISwipeGestureRecognizer *)gesture;
-      if (swipeGesture.direction == UISwipeGestureRecognizerDirectionLeft) {
-        self.currentTreeIdx++;
-        self.treeSlider.value = self.currentTreeIdx+1;
-        [self showTree:self.currentTreeIdx];
-      } else if (swipeGesture.direction == UISwipeGestureRecognizerDirectionRight) {
-        self.currentTreeIdx--;
-        self.treeSlider.value = self.currentTreeIdx+1;
-        [self showTree:self.currentTreeIdx];
-      }
-    }
-  }
-}
-- (IBAction)sliderMoved:(UISlider *)sender
-{
-  if ((int)self.treeSlider.value-1!=self.currentTreeIdx) {
-    self.currentTreeIdx = (int)self.treeSlider.value-1;
-    [self showTree:self.currentTreeIdx];
-  }
-}
-- (IBAction)switchFlipped:(UISwitch *)sender
-{
-  if ([self.treeViewContainer.subviews count]>0) {
-    RSFTreeView *v = (RSFTreeView *)self.treeViewContainer.subviews[0];
-    if (sender.on) {
-      v.legend = YES;
-    } else {
-      v.legend = NO;
-    }
-  }
-}
 
 #pragma mark - Show current tree
 -(void)showTree:(int)treeIdx
@@ -153,22 +123,7 @@
     self.rootNode = self.rsf.trees[treeIdx];
 
     // Compute layoutFrame, and screen size of graph
-    CGSize graphSize = [RSFTreeView sizeOfGraph:self.rootNode];
-    
-    // Add RSFTreeView, center located on the screen, frame max 90% of width/height of View
-    double frameScale = 1.0;
-    frameScale = MIN(frameScale, 0.95*self.treeViewContainer.bounds.size.width/graphSize.width);
-    frameScale = MIN(frameScale, 0.95*self.treeViewContainer.bounds.size.height/graphSize.height);
-
-    double frameWidth = graphSize.width*frameScale;
-    double frameHeight = graphSize.height*frameScale;
-
-    CGRect treeRect = CGRectMake((self.treeViewContainer.bounds.size.width - frameWidth)/2.0,
-                                 (self.treeViewContainer.bounds.size.height - frameHeight)/2.0,
-                                 frameWidth,
-                                 frameHeight);
-    
-    RSFTreeView *treeView = [[RSFTreeView alloc] initWithFrame:treeRect];
+    RSFTreeView *treeView = [[RSFTreeView alloc] initWithFrame:CGRectZero]; // Create with dummy size
 
     // Configure rendering
     treeView.drawBorder = NO;
@@ -176,50 +131,71 @@
     treeView.nodeLabel = NODE_LEVEL;
     treeView.rootNode = self.rootNode;
     treeView.variableNames = self.rsf.variableNames;
+
+    // Nicely locate the tree in the center of the screen
+    CGSize treeSize = [treeView sizeOfGraph];
+    double graphLayoutRatio = treeSize.width/treeSize.height;
+    double frameWidth;
+    double frameHeight;
+    if (graphLayoutRatio > self.treeViewContainer.bounds.size.width/self.treeViewContainer.bounds.size.height) { // Landscape
+      frameWidth  = 0.9*self.treeViewContainer.bounds.size.width;
+      frameHeight = frameWidth/graphLayoutRatio;
+    } else { // Portrait
+      frameHeight = 0.9*self.treeViewContainer.bounds.size.height;
+      frameWidth  = frameHeight*graphLayoutRatio;
+    }
+    treeView.frame = CGRectMake((self.treeViewContainer.bounds.size.width - frameWidth)/2.0,
+                                (self.treeViewContainer.bounds.size.height - frameHeight)/2.0,
+                                frameWidth,
+                                frameHeight);
+//#define GRAY_SHADE 0.9
+//    treeView.backgroundColor = [UIColor colorWithRed:GRAY_SHADE green:GRAY_SHADE blue:GRAY_SHADE alpha:1];
     [treeView scaleToFit];
+    
+    // Add gesture recognizers
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    [treeView addGestureRecognizer:tapGestureRecognizer];
+    
+    UISwipeGestureRecognizer *swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
+    UISwipeGestureRecognizer *swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
+    swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    swipeRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.treeViewContainer addGestureRecognizer:swipeLeftGestureRecognizer];
+    [self.treeViewContainer addGestureRecognizer:swipeRightGestureRecognizer];
     
     // Add view
     [self.treeViewContainer addSubview:treeView];
-    
-    // Add tapGestureRecognizer
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-    [self.treeViewContainer addGestureRecognizer:tapGestureRecognizer];
     
     // Update tree information text
     self.treeLabel.text = [self treeInfo:self.currentTreeIdx];
   }
 }
 
-#pragma mark - Gesture recognizer
--(void)tap:(UITapGestureRecognizer *)gesture
+-(void)swipe:(UISwipeGestureRecognizer *)gesture
 {
   if (gesture.state == UIGestureRecognizerStateEnded) {
-    RSFTreeView *tv = (RSFTreeView *)self.treeViewContainer.subviews[0];
-    CGPoint p = [gesture locationInView:tv];
-
-    for (UIView *v in tv.subviews) {
-      if( CGRectContainsPoint(v.frame, p) ) {
-        RSFNodeView *nv = (RSFNodeView *)v;
-        NSLog(@"Tap on node with id %d\n", nv.node.nodeId);
-
-        if ( nv.node.variableIdx>0 ) {
-          NSString *nodeMessage = [NSString stringWithFormat:@"split value: %f", nv.node.splitValue];
-          
-          UIAlertController* alert = [UIAlertController alertControllerWithTitle:self.rsf.variableNames[nv.node.variableIdx-1]
-                                                                         message:nodeMessage
-                                                                  preferredStyle:UIAlertControllerStyleAlert];
-          
-          UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                handler:^(UIAlertAction * action) {}];
-          
-          [alert addAction:defaultAction];
-          [self presentViewController:alert animated:YES completion:nil];
-        }
-      }
+    if (gesture.direction==UISwipeGestureRecognizerDirectionLeft && (self.currentTreeIdx < [self.rsf.trees count]-2)) {
+      self.currentTreeIdx = self.currentTreeIdx + 1;
+      self.treeSlider.value = self.currentTreeIdx + 1;
+      [self showTree:self.currentTreeIdx];
+    } else if (gesture.direction==UISwipeGestureRecognizerDirectionRight && self.currentTreeIdx > 0) {
+      self.currentTreeIdx = self.currentTreeIdx - 1;
+      self.treeSlider.value = self.currentTreeIdx - 1;
+      [self showTree:self.currentTreeIdx];
     }
   }
 }
 
+-(void)tap:(UITapGestureRecognizer *)gesture
+{
+  RSFTreeView *view = (RSFTreeView *)gesture.view;
+  CGPoint p = [gesture locationInView:view];
+  RSFNode *tappedNode = [view tappedNode:p];
+  
+  if (tappedNode) {
+    NSLog(@"Tapped on node with id %d\n", tappedNode.nodeId);
+  }
+}
 
 -(NSString *)treeInfo:(int)treeIdx
 {
