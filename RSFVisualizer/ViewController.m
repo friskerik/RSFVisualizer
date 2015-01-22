@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "RSFNode.h"
 #import "RSFTreeView.h"
-#import "RSFNodeView.h"
+//#import "RSFNodeView.h"
 #import "RSFFileReader.h"
 #import "RSFNode+additions.h"
 #import "IDGenerator.h"

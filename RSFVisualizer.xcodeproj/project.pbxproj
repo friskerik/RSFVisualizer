@@ -25,7 +25,6 @@
 		AE8765E91A64487B0013529B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE8765E81A64487B0013529B /* Images.xcassets */; };
 		AE8765EC1A64487B0013529B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE8765EA1A64487B0013529B /* LaunchScreen.xib */; };
 		AE8765F81A64487B0013529B /* RSFVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8765F71A64487B0013529B /* RSFVisualizerTests.m */; };
-		AE8766031A6449190013529B /* RSFNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8766021A6449190013529B /* RSFNodeView.m */; };
 		AE87660B1A6459C80013529B /* RSFNode.m in Sources */ = {isa = PBXBuildFile; fileRef = AE87660A1A6459C80013529B /* RSFNode.m */; };
 		AE9613E41A6856830067F4C0 /* RSFNode+additions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9613E31A6856830067F4C0 /* RSFNode+additions.m */; };
 /* End PBXBuildFile section */
@@ -70,8 +69,6 @@
 		AE8765F11A64487B0013529B /* RSFVisualizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSFVisualizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8765F61A64487B0013529B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE8765F71A64487B0013529B /* RSFVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSFVisualizerTests.m; sourceTree = "<group>"; };
-		AE8766011A6449190013529B /* RSFNodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFNodeView.h; sourceTree = "<group>"; };
-		AE8766021A6449190013529B /* RSFNodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFNodeView.m; sourceTree = "<group>"; };
 		AE8766091A6459C80013529B /* RSFNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFNode.h; sourceTree = "<group>"; };
 		AE87660A1A6459C80013529B /* RSFNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFNode.m; sourceTree = "<group>"; };
 		AE9613E21A6856830067F4C0 /* RSFNode+additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSFNode+additions.h"; sourceTree = "<group>"; };
@@ -175,8 +172,6 @@
 			children = (
 				AE513BFD1A7055320086D7DE /* RSFTreeView.m */,
 				AE513BFE1A7055320086D7DE /* RSFTreeView.h */,
-				AE8766011A6449190013529B /* RSFNodeView.h */,
-				AE8766021A6449190013529B /* RSFNodeView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -319,7 +314,6 @@
 				AE0022371A65C4FA008B2B1B /* RSF.m in Sources */,
 				AE00222E1A65B4C6008B2B1B /* RSFFileReader.m in Sources */,
 				AE8765E41A64487B0013529B /* ViewController.m in Sources */,
-				AE8766031A6449190013529B /* RSFNodeView.m in Sources */,
 				AE513BFF1A7055320086D7DE /* RSFTreeView.m in Sources */,
 				AE0022311A65BBC8008B2B1B /* RSFNodeSpec.m in Sources */,
 				AE8765E11A64487B0013529B /* AppDelegate.m in Sources */,
