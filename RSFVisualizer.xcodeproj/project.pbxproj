@@ -15,6 +15,7 @@
 		AE0022371A65C4FA008B2B1B /* RSF.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0022361A65C4FA008B2B1B /* RSF.m */; };
 		AE00223A1A65CD21008B2B1B /* fleet.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE0022381A65CD21008B2B1B /* fleet.txt */; };
 		AE00223B1A65CD21008B2B1B /* fleet.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE0022391A65CD21008B2B1B /* fleet.xml */; };
+		AE05F6C61A7446FB00CF07BC /* TreeSelectorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE05F6C51A7446FB00CF07BC /* TreeSelectorTableViewController.m */; };
 		AE513BFF1A7055320086D7DE /* RSFTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE513BFD1A7055320086D7DE /* RSFTreeView.m */; };
 		AE67E1601A6B23F000DC5FA9 /* rsf_200.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE67E15E1A6B23F000DC5FA9 /* rsf_200.txt */; };
 		AE67E1611A6B23F000DC5FA9 /* rsf_200.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE67E15F1A6B23F000DC5FA9 /* rsf_200.xml */; };
@@ -52,6 +53,8 @@
 		AE0022361A65C4FA008B2B1B /* RSF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSF.m; sourceTree = "<group>"; };
 		AE0022381A65CD21008B2B1B /* fleet.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fleet.txt; sourceTree = "<group>"; };
 		AE0022391A65CD21008B2B1B /* fleet.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fleet.xml; sourceTree = "<group>"; };
+		AE05F6C41A7446FB00CF07BC /* TreeSelectorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeSelectorTableViewController.h; sourceTree = "<group>"; };
+		AE05F6C51A7446FB00CF07BC /* TreeSelectorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeSelectorTableViewController.m; sourceTree = "<group>"; };
 		AE513BFD1A7055320086D7DE /* RSFTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFTreeView.m; sourceTree = "<group>"; };
 		AE513BFE1A7055320086D7DE /* RSFTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFTreeView.h; sourceTree = "<group>"; };
 		AE67E15E1A6B23F000DC5FA9 /* rsf_200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rsf_200.txt; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 		AE8765F71A64487B0013529B /* RSFVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSFVisualizerTests.m; sourceTree = "<group>"; };
 		AE8766091A6459C80013529B /* RSFNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFNode.h; sourceTree = "<group>"; };
 		AE87660A1A6459C80013529B /* RSFNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFNode.m; sourceTree = "<group>"; };
+		AE939C471A744FE7000D9EBD /* TreeSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		AE9613E21A6856830067F4C0 /* RSFNode+additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSFNode+additions.h"; sourceTree = "<group>"; };
 		AE9613E31A6856830067F4C0 /* RSFNode+additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RSFNode+additions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -181,6 +185,9 @@
 			children = (
 				AE8765E21A64487B0013529B /* ViewController.h */,
 				AE8765E31A64487B0013529B /* ViewController.m */,
+				AE939C471A744FE7000D9EBD /* TreeSelectorViewControllerDelegate.h */,
+				AE05F6C41A7446FB00CF07BC /* TreeSelectorTableViewController.h */,
+				AE05F6C51A7446FB00CF07BC /* TreeSelectorTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -316,6 +323,7 @@
 				AE8765E41A64487B0013529B /* ViewController.m in Sources */,
 				AE513BFF1A7055320086D7DE /* RSFTreeView.m in Sources */,
 				AE0022311A65BBC8008B2B1B /* RSFNodeSpec.m in Sources */,
+				AE05F6C61A7446FB00CF07BC /* TreeSelectorTableViewController.m in Sources */,
 				AE8765E11A64487B0013529B /* AppDelegate.m in Sources */,
 				AE8765DE1A64487B0013529B /* main.m in Sources */,
 				AE0022341A65C0EA008B2B1B /* IDGenerator.m in Sources */,

@@ -9,17 +9,20 @@
 #import "ViewController.h"
 #import "RSFNode.h"
 #import "RSFTreeView.h"
-//#import "RSFNodeView.h"
 #import "RSFFileReader.h"
 #import "RSFNode+additions.h"
 #import "IDGenerator.h"
+#import "TreeSelectorTableViewController.h"
 
-@interface ViewController () <UIScrollViewDelegate>
+@interface ViewController () <UIScrollViewDelegate,TreeSelectorViewControllerDelegate>
 @property (nonatomic, strong) RSFNode *rootNode;
 @property (nonatomic, strong) NSData *d;
 @property (nonatomic, strong) RSF *rsf;
+@property (nonatomic, strong) NSDictionary *rsfFiles;
+@property (nonatomic, strong) NSArray *rsfTreeNames;
 @property (nonatomic) int currentTreeIdx;
 @property (nonatomic, strong) RSFTreeView *treeView; // Current treeView
+@property (nonatomic,weak) UIPopoverController *treeSelectionPopoverController;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *treeViewContainer;
 @property (weak, nonatomic) IBOutlet UILabel *treeLabel;
@@ -27,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *minValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *maxValueLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *legendSwitch;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *vimpButton;
 @end
 
 @implementation ViewController
@@ -41,13 +45,25 @@
   [super viewDidLoad];
   
   RSFFileReader *rsfFilereader = [[RSFFileReader alloc] init];
-  NSDictionary *rsfFiles = [rsfFilereader GetRSFFilesInDocumentsDirectory];
+  self.rsfFiles = [rsfFilereader GetRSFFilesInDocumentsDirectory];
 
-  NSString *key = @"rsf_200";
-//  NSString *key = @"fleet";
+  NSMutableArray *treeNames = [[NSMutableArray alloc] init];
+  NSEnumerator *enumerator = [self.rsfFiles keyEnumerator];
+  NSString *k;
   
-  [self setup:key withURLs:[rsfFiles objectForKey:key]]; // Search files in the document folder
-//  [self setup:key withURLs:nil]; // Search fil in the resources
+  while ((k = [enumerator nextObject])) {
+    [treeNames addObject:k];
+  }
+  self.rsfTreeNames = treeNames;
+  self.vimpButton.enabled = NO;
+  self.treeLabel.text = @"";
+  
+  
+//  NSString *key = @"rsf_200";
+////  NSString *key = @"fleet";
+//  
+//  [self setup:key withURLs:[self.rsfFiles objectForKey:key]]; // Search files in the document folder
+////  [self setup:key withURLs:nil]; // Search fil in the resources
 }
 
 -(void)viewDidLayoutSubviews
@@ -78,6 +94,7 @@
   if (self.currentTreeIdx < [self.rsf.trees count]-2) {
     self.currentTreeIdx = self.currentTreeIdx + 1;
     [self showTree:self.currentTreeIdx];
+    self.treeSlider.value = self.currentTreeIdx + 1;
   }
 }
 - (IBAction)previousTree:(UIButton *)sender
@@ -85,6 +102,7 @@
   if (self.currentTreeIdx > 0) {
     self.currentTreeIdx = self.currentTreeIdx - 1;
     [self showTree:self.currentTreeIdx];
+    self.treeSlider.value = self.currentTreeIdx + 1;
   }
 }
 
@@ -205,7 +223,28 @@
 
 -(NSString *)treeInfo:(int)treeIdx
 {
-  return [NSString stringWithFormat:@"Tree %d: %d nodes, %d leaves, and depth %d", treeIdx+1, [self.rsf.trees[treeIdx] numberOfNodes], [self.rsf.trees[treeIdx] numberOfLeaves], [self.rsf.trees[treeIdx] depth]];
+  if ([self.rsf.trees count]>0) {
+    return [NSString stringWithFormat:@"Tree %d: %d nodes, %d leaves, and depth %d", treeIdx+1, [self.rsf.trees[treeIdx] numberOfNodes], [self.rsf.trees[treeIdx] numberOfLeaves], [self.rsf.trees[treeIdx] depth]];
+  } else {
+    return @"";
+  }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+  if ([segue.destinationViewController isKindOfClass:[TreeSelectorTableViewController class]]) {
+    TreeSelectorTableViewController *tsvc = (TreeSelectorTableViewController *)segue.destinationViewController;
+    tsvc.rsfTreeNames = self.rsfTreeNames;
+    tsvc.delegate = self;
+  }
+}
+
+-(void)selectedTreeWithName:(NSString *)treeName
+{
+  [self.treeSelectionPopoverController dismissPopoverAnimated:YES];
+  [self setup:treeName withURLs:[self.rsfFiles objectForKey:treeName]];
+  self.treeSlider.value = 1;
+  [self showTree:0];
 }
 
 @end
