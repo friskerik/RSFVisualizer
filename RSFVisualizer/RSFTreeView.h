@@ -14,7 +14,7 @@ typedef enum {NODE_ID, NODE_LEVEL} NodeLabelType;
 @interface RSFTreeView : UIView
 @property (nonatomic, weak) RSFNode *rootNode;
 @property (nonatomic, weak) NSArray *variableNames; // of NSString *
-
+@property (nonatomic, strong) NSMutableArray *variableMarkings;
 @property (nonatomic) BOOL drawBorder;
 @property (nonatomic) BOOL legend;
 @property (nonatomic) NodeLabelType nodeLabel;

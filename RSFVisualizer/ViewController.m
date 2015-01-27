@@ -120,6 +120,15 @@
     [self showTree:self.currentTreeIdx];
   }
 }
+- (IBAction)clearMarkings:(UIButton *)sender
+{
+  if (self.treeView) {
+    for (int ii=0; ii < [self.rsf.variableNames count]; ii++) {
+      self.treeView.variableMarkings[ii] = @NO;
+    }
+    [self.treeView redraw];
+  }
+}
 
 #pragma mark - Main setup, read RSF files
 -(void)setup:(NSString *)rsfName withURLs:(NSDictionary *)rsfFileURLs
@@ -170,6 +179,12 @@
     self.treeView.nodeLabel = NODE_LEVEL;
     self.treeView.rootNode = self.rootNode;
     self.treeView.variableNames = self.rsf.variableNames;
+
+    self.treeView.variableMarkings = [[NSMutableArray alloc] init];
+    for (int ii=0; ii < [self.rsf.variableNames count]; ii++) {
+      [self.treeView.variableMarkings addObject:@NO];
+    }
+
     CGSize treeSize = [self.treeView sizeOfGraph];
     self.treeView.frame = CGRectMake(0.0, 0.0, treeSize.width, treeSize.height);
 
@@ -198,6 +213,7 @@
 }
 
 
+
 -(void)tap:(UITapGestureRecognizer *)gesture
 {
   RSFTreeView *view = (RSFTreeView *)gesture.view;
@@ -205,19 +221,32 @@
   RSFNode *tappedNode = [view tappedNode:p];
   
   if (tappedNode && ![tappedNode isLeaf]) {
-    NSString *alertTitle = self.rsf.variableNames[tappedNode.variableIdx-1];
-    
-    NSString *alertMessage = [NSString stringWithFormat:@"split value = %f", tappedNode.splitValue];
-    
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
-                                                                   message:alertMessage
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {}];
-    
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    view.variableMarkings[tappedNode.variableIdx-1] = [view.variableMarkings[tappedNode.variableIdx-1] isEqual:@YES] ? @NO : @YES;
+    [view redraw];
+//    NSString *alertTitle = self.rsf.variableNames[tappedNode.variableIdx-1];
+//    
+//    NSString *alertMessage = [NSString stringWithFormat:@"split value = %f", tappedNode.splitValue];
+//    
+//    UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
+//                                                                   message:alertMessage
+//                                                            preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+//                                                          handler:^(UIAlertAction * action) {}];
+//    
+//    [alert addAction:defaultAction];
+//
+//    if (![tappedNode isLeaf]) {
+//      UIAlertAction* markAction = [UIAlertAction actionWithTitle:@"Toggle mark" style:UIAlertActionStyleDefault
+//                                                         handler:^(UIAlertAction * action) {
+//                                                           if (![tappedNode isLeaf]) {
+//                                                             view.variableMarkings[tappedNode.variableIdx-1] = [view.variableMarkings[tappedNode.variableIdx-1] isEqual:@YES] ? @NO : @YES;
+//                                                             [view redraw];
+//                                                           }
+//                                                         }];
+//      
+//      [alert addAction:markAction];
+//    }
+//    [self presentViewController:alert animated:YES completion:nil];
   }
 }
 

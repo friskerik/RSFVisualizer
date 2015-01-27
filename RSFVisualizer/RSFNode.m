@@ -45,7 +45,7 @@ NodePositionMake(double x, double y)
   return n;
 }
 
--(bool)isLeaf
+-(BOOL)isLeaf
 {
   if (self.left !=nil || self.right !=nil) {
     return false;

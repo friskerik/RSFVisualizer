@@ -226,7 +226,13 @@
     path = [UIBezierPath bezierPathWithArcCenter:p radius:r startAngle:0 endAngle:2*M_PI clockwise:YES];
     
     [[UIColor blackColor] setStroke];
-    [[UIColor yellowColor] setFill];
+    
+    if (node.variableIdx==0 || [self.variableMarkings[node.variableIdx-1] isEqual:@NO] ) {
+      [[UIColor yellowColor] setFill];
+    } else {
+      [[UIColor colorWithRed:102.0/255 green:178.0/255 blue:1 alpha:1] setFill];
+    }
+    
     [path setLineWidth:2.0*self.scaleFactor];
     
     [path fill];
