@@ -204,6 +204,11 @@
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.treeView addGestureRecognizer:tapGestureRecognizer];
     
+    
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    longPressGestureRecognizer.minimumPressDuration = 1.0; // seconds
+    [self.treeView addGestureRecognizer:longPressGestureRecognizer];
+    
     // Add view
     [self.treeViewContainer addSubview:self.treeView];
     
@@ -212,7 +217,18 @@
   }
 }
 
+-(void)longPress:(UILongPressGestureRecognizer *)gesture
+{
+  if (gesture.state==UIGestureRecognizerStateBegan) {
+    RSFTreeView *view = (RSFTreeView *)gesture.view;
+    CGPoint p = [gesture locationInView:view];
+    RSFNode *longPressNode = [view tappedNode:p];
 
+    if (longPressNode && ![longPressNode isLeaf]) {
+      NSLog(@"Long press on node %@\n", self.rsf.variableNames[longPressNode.variableIdx-1]);
+    }
+  }
+}
 
 -(void)tap:(UITapGestureRecognizer *)gesture
 {
@@ -223,30 +239,6 @@
   if (tappedNode && ![tappedNode isLeaf]) {
     view.variableMarkings[tappedNode.variableIdx-1] = [view.variableMarkings[tappedNode.variableIdx-1] isEqual:@YES] ? @NO : @YES;
     [view redraw];
-//    NSString *alertTitle = self.rsf.variableNames[tappedNode.variableIdx-1];
-//    
-//    NSString *alertMessage = [NSString stringWithFormat:@"split value = %f", tappedNode.splitValue];
-//    
-//    UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
-//                                                                   message:alertMessage
-//                                                            preferredStyle:UIAlertControllerStyleAlert];
-//    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-//                                                          handler:^(UIAlertAction * action) {}];
-//    
-//    [alert addAction:defaultAction];
-//
-//    if (![tappedNode isLeaf]) {
-//      UIAlertAction* markAction = [UIAlertAction actionWithTitle:@"Toggle mark" style:UIAlertActionStyleDefault
-//                                                         handler:^(UIAlertAction * action) {
-//                                                           if (![tappedNode isLeaf]) {
-//                                                             view.variableMarkings[tappedNode.variableIdx-1] = [view.variableMarkings[tappedNode.variableIdx-1] isEqual:@YES] ? @NO : @YES;
-//                                                             [view redraw];
-//                                                           }
-//                                                         }];
-//      
-//      [alert addAction:markAction];
-//    }
-//    [self presentViewController:alert animated:YES completion:nil];
   }
 }
 
