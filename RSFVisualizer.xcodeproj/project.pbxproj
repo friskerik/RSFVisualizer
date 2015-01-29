@@ -27,6 +27,10 @@
 		AE8765EC1A64487B0013529B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE8765EA1A64487B0013529B /* LaunchScreen.xib */; };
 		AE8765F81A64487B0013529B /* RSFVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8765F71A64487B0013529B /* RSFVisualizerTests.m */; };
 		AE87660B1A6459C80013529B /* RSFNode.m in Sources */ = {isa = PBXBuildFile; fileRef = AE87660A1A6459C80013529B /* RSFNode.m */; };
+		AE8C3C0B1A7AD34900E767CF /* fleet_vimp.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE8C3C091A7AD34900E767CF /* fleet_vimp.txt */; };
+		AE8C3C0C1A7AD34900E767CF /* fleet_vimp.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE8C3C0A1A7AD34900E767CF /* fleet_vimp.xml */; };
+		AE8C3C0F1A7AD40D00E767CF /* VariablesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8C3C0E1A7AD40D00E767CF /* VariablesTableViewController.m */; };
+		AE8C3C121A7AD44500E767CF /* RSFSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8C3C111A7AD44500E767CF /* RSFSplitViewController.m */; };
 		AE9613E41A6856830067F4C0 /* RSFNode+additions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9613E31A6856830067F4C0 /* RSFNode+additions.m */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +78,12 @@
 		AE8765F71A64487B0013529B /* RSFVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSFVisualizerTests.m; sourceTree = "<group>"; };
 		AE8766091A6459C80013529B /* RSFNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFNode.h; sourceTree = "<group>"; };
 		AE87660A1A6459C80013529B /* RSFNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFNode.m; sourceTree = "<group>"; };
+		AE8C3C091A7AD34900E767CF /* fleet_vimp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fleet_vimp.txt; sourceTree = "<group>"; };
+		AE8C3C0A1A7AD34900E767CF /* fleet_vimp.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fleet_vimp.xml; sourceTree = "<group>"; };
+		AE8C3C0D1A7AD40D00E767CF /* VariablesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariablesTableViewController.h; sourceTree = "<group>"; };
+		AE8C3C0E1A7AD40D00E767CF /* VariablesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariablesTableViewController.m; sourceTree = "<group>"; };
+		AE8C3C101A7AD44500E767CF /* RSFSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFSplitViewController.h; sourceTree = "<group>"; };
+		AE8C3C111A7AD44500E767CF /* RSFSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFSplitViewController.m; sourceTree = "<group>"; };
 		AE939C471A744FE7000D9EBD /* TreeSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		AE9613E21A6856830067F4C0 /* RSFNode+additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSFNode+additions.h"; sourceTree = "<group>"; };
 		AE9613E31A6856830067F4C0 /* RSFNode+additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RSFNode+additions.m"; sourceTree = "<group>"; };
@@ -100,6 +110,8 @@
 		AE00222B1A65A95C008B2B1B /* RSFFiles */ = {
 			isa = PBXGroup;
 			children = (
+				AE8C3C091A7AD34900E767CF /* fleet_vimp.txt */,
+				AE8C3C0A1A7AD34900E767CF /* fleet_vimp.xml */,
 				AE0022271A65A954008B2B1B /* fleet1.txt */,
 				AE0022281A65A954008B2B1B /* fleet1.xml */,
 				AE0022381A65CD21008B2B1B /* fleet.txt */,
@@ -183,6 +195,10 @@
 		AE8766081A6459950013529B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AE8C3C101A7AD44500E767CF /* RSFSplitViewController.h */,
+				AE8C3C111A7AD44500E767CF /* RSFSplitViewController.m */,
+				AE8C3C0D1A7AD40D00E767CF /* VariablesTableViewController.h */,
+				AE8C3C0E1A7AD40D00E767CF /* VariablesTableViewController.m */,
 				AE8765E21A64487B0013529B /* ViewController.h */,
 				AE8765E31A64487B0013529B /* ViewController.m */,
 				AE939C471A744FE7000D9EBD /* TreeSelectorViewControllerDelegate.h */,
@@ -295,6 +311,8 @@
 				AE8765E71A64487B0013529B /* Main.storyboard in Resources */,
 				AE0022291A65A954008B2B1B /* fleet1.txt in Resources */,
 				AE8765EC1A64487B0013529B /* LaunchScreen.xib in Resources */,
+				AE8C3C0B1A7AD34900E767CF /* fleet_vimp.txt in Resources */,
+				AE8C3C0C1A7AD34900E767CF /* fleet_vimp.xml in Resources */,
 				AE00223A1A65CD21008B2B1B /* fleet.txt in Resources */,
 				AE00222A1A65A954008B2B1B /* fleet1.xml in Resources */,
 				AE67E1601A6B23F000DC5FA9 /* rsf_200.txt in Resources */,
@@ -323,6 +341,8 @@
 				AE8765E41A64487B0013529B /* ViewController.m in Sources */,
 				AE513BFF1A7055320086D7DE /* RSFTreeView.m in Sources */,
 				AE0022311A65BBC8008B2B1B /* RSFNodeSpec.m in Sources */,
+				AE8C3C121A7AD44500E767CF /* RSFSplitViewController.m in Sources */,
+				AE8C3C0F1A7AD40D00E767CF /* VariablesTableViewController.m in Sources */,
 				AE05F6C61A7446FB00CF07BC /* TreeSelectorTableViewController.m in Sources */,
 				AE8765E11A64487B0013529B /* AppDelegate.m in Sources */,
 				AE8765DE1A64487B0013529B /* main.m in Sources */,
