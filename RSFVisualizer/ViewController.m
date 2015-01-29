@@ -13,6 +13,7 @@
 #import "RSFNode+additions.h"
 #import "IDGenerator.h"
 #import "TreeSelectorTableViewController.h"
+#import "VariablesTableViewController.h"
 
 @interface ViewController () <UIScrollViewDelegate,TreeSelectorViewControllerDelegate>
 @property (nonatomic, strong) RSFNode *rootNode;
@@ -43,6 +44,10 @@
 //#endif
   
   [super viewDidLoad];
+  
+  self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+  self.navigationItem.leftItemsSupplementBackButton = YES;
+
   
   RSFFileReader *rsfFilereader = [[RSFFileReader alloc] init];
   self.rsfFiles = [rsfFilereader GetRSFFilesInDocumentsDirectory];
@@ -150,6 +155,10 @@
     self.maxValueLabel.text = [NSString stringWithFormat:@"%d", (int)[self.rsf.trees count]];
     
     self.title = [@"Random Survival Forest: " stringByAppendingString:rsfName];
+    
+    // Get master controller in split view
+    VariablesTableViewController *vtvc = (VariablesTableViewController *)[self.splitViewController.viewControllers[0] topViewController];
+    vtvc.variableNames = self.rsf.variableNames;
   } else {
     NSLog(@"Error reading tree %@\n", rsfName);
   }

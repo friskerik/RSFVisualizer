@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<PMML version="3.1" xmlns="http://www.dmg.org/PMML-3_1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <Header copyright="Copyright 2008, Cleveland Clinic" description="Random Survival Forest Tree Model">
+  <Application name="Random Survival Forest" version="3.0"/>
+ </Header>
+ <DataDictionary numberOfFields="3">
+  <DataField name="var1" optype="continuous" dataType="double"><Extension name="vimp" value="1.1"/></DataField>
+  <DataField name="var2" optype="continuous" dataType="double"><Extension name="vimp" value="2.2"/></DataField>
+  <DataField name="noise1" optype="continuous" dataType="double"><Extension name="vimp" value="3.3"/></DataField>
+ </DataDictionary>
+</PMML>
