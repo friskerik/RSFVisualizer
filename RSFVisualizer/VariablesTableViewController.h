@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RSF.h"
+
+@protocol VariablesTableViewControllerDelegate <NSObject>
+
+-(void)switchVariableMarking:(int)variableIdx;
+
+@end
 
 @interface VariablesTableViewController : UITableViewController
-@property (nonatomic, strong) NSArray *variableNames;
+@property (nonatomic, weak) RSF *rsf;
+@property (nonatomic, strong) id<VariablesTableViewControllerDelegate> delegate;
 @end

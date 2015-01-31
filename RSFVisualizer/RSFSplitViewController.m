@@ -18,6 +18,7 @@
 {
   [super viewDidLoad];
   self.preferredDisplayMode = UISplitViewControllerDisplayModePrimaryHidden;
+  self.presentsWithGesture = NO;
 }
 
 @end

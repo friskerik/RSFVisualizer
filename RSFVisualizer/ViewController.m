@@ -15,7 +15,7 @@
 #import "TreeSelectorTableViewController.h"
 #import "VariablesTableViewController.h"
 
-@interface ViewController () <UIScrollViewDelegate,TreeSelectorViewControllerDelegate>
+@interface ViewController () <UIScrollViewDelegate,TreeSelectorViewControllerDelegate, VariablesTableViewControllerDelegate>
 @property (nonatomic, strong) RSFNode *rootNode;
 @property (nonatomic, strong) NSData *d;
 @property (nonatomic, strong) RSF *rsf;
@@ -47,7 +47,6 @@
   
   self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
   self.navigationItem.leftItemsSupplementBackButton = YES;
-
   
   RSFFileReader *rsfFilereader = [[RSFFileReader alloc] init];
   self.rsfFiles = [rsfFilereader GetRSFFilesInDocumentsDirectory];
@@ -75,7 +74,7 @@
 {
   [super viewDidLayoutSubviews];
   if ([self.rsf.trees count] > self.currentTreeIdx) {
-    [self showTree:self.currentTreeIdx];
+    [self showTree:self.currentTreeIdx withMarkings:self.treeView.variableMarkings];
   }
 }
 
@@ -98,17 +97,25 @@
 {
   if (self.currentTreeIdx < [self.rsf.trees count]-2) {
     self.currentTreeIdx = self.currentTreeIdx + 1;
-    [self showTree:self.currentTreeIdx];
+    [self showTree:self.currentTreeIdx withMarkings:self.treeView.variableMarkings];
     self.treeSlider.value = self.currentTreeIdx + 1;
+    [self.treeView redraw];
   }
 }
 - (IBAction)previousTree:(UIButton *)sender
 {
   if (self.currentTreeIdx > 0) {
     self.currentTreeIdx = self.currentTreeIdx - 1;
-    [self showTree:self.currentTreeIdx];
+    [self showTree:self.currentTreeIdx withMarkings:self.treeView.variableMarkings];
     self.treeSlider.value = self.currentTreeIdx + 1;
   }
+}
+
+
+#pragma mark - UI Actions
+- (IBAction)treeInfoPressed:(UIButton *)sender
+{
+  NSLog(@"Todo, popup tree information");
 }
 
 - (IBAction)legendSwitch:(UISwitch *)sender
@@ -122,7 +129,7 @@
 {
   if (sender.value-1 != self.currentTreeIdx) {
     self.currentTreeIdx = self.treeSlider.value - 1;
-    [self showTree:self.currentTreeIdx];
+    [self showTree:self.currentTreeIdx withMarkings:self.treeView.variableMarkings];
   }
 }
 - (IBAction)clearMarkings:(UIButton *)sender
@@ -158,7 +165,8 @@
     
     // Get master controller in split view
     VariablesTableViewController *vtvc = (VariablesTableViewController *)[self.splitViewController.viewControllers[0] topViewController];
-    vtvc.variableNames = self.rsf.variableNames;
+    vtvc.rsf = self.rsf;
+    vtvc.delegate = self;
   } else {
     NSLog(@"Error reading tree %@\n", rsfName);
   }
@@ -170,7 +178,7 @@
 }
 
 #pragma mark - Show current tree
--(void)showTree:(int)treeIdx
+-(void)showTree:(int)treeIdx withMarkings:(NSMutableArray *)markings
 {
   if (treeIdx < [self.rsf.trees count]) {
     for (UIView *v in self.treeViewContainer.subviews) {
@@ -189,9 +197,13 @@
     self.treeView.rootNode = self.rootNode;
     self.treeView.variableNames = self.rsf.variableNames;
 
-    self.treeView.variableMarkings = [[NSMutableArray alloc] init];
-    for (int ii=0; ii < [self.rsf.variableNames count]; ii++) {
-      [self.treeView.variableMarkings addObject:@NO];
+    if (!markings) {
+      self.treeView.variableMarkings = [[NSMutableArray alloc] init];
+      for (int ii=0; ii < [self.rsf.variableNames count]; ii++) {
+        [self.treeView.variableMarkings addObject:@NO];
+      }
+    } else {
+      self.treeView.variableMarkings = markings;
     }
 
     CGSize treeSize = [self.treeView sizeOfGraph];
@@ -251,6 +263,13 @@
   }
 }
 
+-(void)switchVariableMarking:(int)variableIdx
+{
+  NSLog(@"tapped variable %@", self.rsf.variableNames[variableIdx-1] );
+  self.treeView.variableMarkings[variableIdx-1] = [self.treeView.variableMarkings[variableIdx-1] isEqual:@YES] ? @NO : @YES;
+  [self.treeView redraw];
+}
+
 -(NSString *)treeInfo:(int)treeIdx
 {
   if ([self.rsf.trees count]>0) {
@@ -274,7 +293,7 @@
   [self.treeSelectionPopoverController dismissPopoverAnimated:YES];
   [self setup:treeName withURLs:[self.rsfFiles objectForKey:treeName]];
   self.treeSlider.value = 1;
-  [self showTree:0];
+  [self showTree:0 withMarkings:nil];
 }
 
 @end
