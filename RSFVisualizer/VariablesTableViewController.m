@@ -36,10 +36,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  self.tableView.allowsMultipleSelection = YES;
-  
-  UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-  [self.view addGestureRecognizer:longPressGestureRecognizer];
+  self.tableView.allowsMultipleSelection = YES;  
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -93,20 +90,6 @@
 {
   int varIdx = [(NSNumber *)[(NSArray *)self.sortedVariableDict[indexPath.row] lastObject] intValue];
   [self.delegate switchVariableMarking:varIdx];  
-}
-
--(void)longPress:(UILongPressGestureRecognizer *)gesture
-{
-  if (gesture.state == UIGestureRecognizerStateBegan) {
-    CGPoint p = [gesture locationInView:self.tableView];
-    
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
-    if ( indexPath ) {
-      int varIdx = [(NSNumber *)[(NSArray *)self.sortedVariableDict[indexPath.row] lastObject] intValue];
-      [self.delegate subTreeSwitch:varIdx];
-    }
-
-  }
 }
 
 @end

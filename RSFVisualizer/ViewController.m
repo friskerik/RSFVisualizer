@@ -200,12 +200,6 @@
   [self.treeView redraw];
 }
 
--(void)subTreeSwitch:(int)varIdx
-{
-  self.subTreeMarkings[varIdx-1] =  [self.subTreeMarkings[varIdx-1] isEqual:@YES] ? @NO  :@YES;
-  [self.treeView redraw];
-}
-
 
 #pragma mark - Show current tree
 -(void)showTree:(int)treeIdx

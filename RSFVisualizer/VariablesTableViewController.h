@@ -13,8 +13,6 @@
 @protocol VariablesTableViewControllerDelegate <NSObject>
 
 -(void)switchVariableMarking:(int)variableIdx;
--(void)subTreeSwitch:(int)varIdx;
-
 @end
 
 @interface VariablesTableViewController : UITableViewController
