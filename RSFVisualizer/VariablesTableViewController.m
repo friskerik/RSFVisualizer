@@ -37,6 +37,30 @@
 {
   [super viewDidLoad];
   self.tableView.allowsMultipleSelection = YES;
+  
+  UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+  [self.view addGestureRecognizer:longPressGestureRecognizer];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  
+  for (int i=0; i < [self.sortedVariableDict count]; i++) {
+    NSArray *varDic = self.sortedVariableDict[i];
+    int variableIdx = [(NSNumber *)[varDic lastObject] intValue];
+    BOOL varMark = [self.delegate isVariableMarked:variableIdx];
+
+    if (varMark) {
+      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+      [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+//      UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+////      [UIColor colorWithRed:102.0/255 green:178.0/255 blue:1 alpha:1]
+//      cell.backgroundColor = [UIColor colorWithRed:102.0/255 green:178.0/255 blue:1 alpha:1];
+    } else {
+      [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:NO];
+    }
+  }
 }
 
 #pragma mark - Table view data source
@@ -70,4 +94,19 @@
   int varIdx = [(NSNumber *)[(NSArray *)self.sortedVariableDict[indexPath.row] lastObject] intValue];
   [self.delegate switchVariableMarking:varIdx];  
 }
+
+-(void)longPress:(UILongPressGestureRecognizer *)gesture
+{
+  if (gesture.state == UIGestureRecognizerStateBegan) {
+    CGPoint p = [gesture locationInView:self.tableView];
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+    if ( indexPath ) {
+      int varIdx = [(NSNumber *)[(NSArray *)self.sortedVariableDict[indexPath.row] lastObject] intValue];
+      [self.delegate subTreeSwitch:varIdx];
+    }
+
+  }
+}
+
 @end

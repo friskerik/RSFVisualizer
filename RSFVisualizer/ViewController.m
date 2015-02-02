@@ -14,8 +14,9 @@
 #import "IDGenerator.h"
 #import "TreeSelectorTableViewController.h"
 #import "VariablesTableViewController.h"
+#import "RSFTreeMarkingDelegate.h"
 
-@interface ViewController () <UIScrollViewDelegate,TreeSelectorViewControllerDelegate, VariablesTableViewControllerDelegate>
+@interface ViewController () <UIScrollViewDelegate,TreeSelectorViewControllerDelegate, VariablesTableViewControllerDelegate,RSFTreeMarkingDelegate>
 @property (nonatomic, strong) RSFNode *rootNode;
 @property (nonatomic, strong) NSData *d;
 @property (nonatomic, strong) RSF *rsf;
@@ -24,6 +25,8 @@
 @property (nonatomic) int currentTreeIdx;
 @property (nonatomic, strong) RSFTreeView *treeView; // Current treeView
 @property (nonatomic,weak) UIPopoverController *treeSelectionPopoverController;
+@property (nonatomic, strong) NSMutableArray *variableMarkings; // of {@NO, @YES}
+@property (nonatomic, strong) NSMutableArray *subTreeMarkings; // of {@NO, @YES}
 
 @property (weak, nonatomic) IBOutlet UIScrollView *treeViewContainer;
 @property (weak, nonatomic) IBOutlet UILabel *treeLabel;
@@ -31,7 +34,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *minValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *maxValueLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *legendSwitch;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *vimpButton;
 @end
 
 @implementation ViewController
@@ -59,22 +61,14 @@
     [treeNames addObject:k];
   }
   self.rsfTreeNames = treeNames;
-  self.vimpButton.enabled = NO;
-  self.treeLabel.text = @"";
-  
-  
-//  NSString *key = @"rsf_200";
-////  NSString *key = @"fleet";
-//  
-//  [self setup:key withURLs:[self.rsfFiles objectForKey:key]]; // Search files in the document folder
-////  [self setup:key withURLs:nil]; // Search fil in the resources
+  self.treeLabel.text = @"";  
 }
 
 -(void)viewDidLayoutSubviews
 {
   [super viewDidLayoutSubviews];
   if ([self.rsf.trees count] > self.currentTreeIdx) {
-    [self showTree:self.currentTreeIdx withMarkings:self.treeView.variableMarkings];
+    [self showTree:self.currentTreeIdx];
   }
 }
 
@@ -91,54 +85,6 @@
     _currentTreeIdx = currentTreeIdx;
     _currentTreeIdx = MAX(0, _currentTreeIdx);
     _currentTreeIdx = MIN((int)[self.rsf.trees count]-1, _currentTreeIdx);
-  }
-}
-- (IBAction)nextTree:(UIButton *)sender
-{
-  if (self.currentTreeIdx < [self.rsf.trees count]-2) {
-    self.currentTreeIdx = self.currentTreeIdx + 1;
-    [self showTree:self.currentTreeIdx withMarkings:self.treeView.variableMarkings];
-    self.treeSlider.value = self.currentTreeIdx + 1;
-    [self.treeView redraw];
-  }
-}
-- (IBAction)previousTree:(UIButton *)sender
-{
-  if (self.currentTreeIdx > 0) {
-    self.currentTreeIdx = self.currentTreeIdx - 1;
-    [self showTree:self.currentTreeIdx withMarkings:self.treeView.variableMarkings];
-    self.treeSlider.value = self.currentTreeIdx + 1;
-  }
-}
-
-
-#pragma mark - UI Actions
-- (IBAction)treeInfoPressed:(UIButton *)sender
-{
-  NSLog(@"Todo, popup tree information");
-}
-
-- (IBAction)legendSwitch:(UISwitch *)sender
-{
-  if (self.treeViewContainer.subviews[0]) {
-    RSFTreeView *v = self.treeViewContainer.subviews[0];
-    v.legend = !sender.on;
-  }
-}
-- (IBAction)sliderMoved:(UISlider *)sender
-{
-  if (sender.value-1 != self.currentTreeIdx) {
-    self.currentTreeIdx = self.treeSlider.value - 1;
-    [self showTree:self.currentTreeIdx withMarkings:self.treeView.variableMarkings];
-  }
-}
-- (IBAction)clearMarkings:(UIButton *)sender
-{
-  if (self.treeView) {
-    for (int ii=0; ii < [self.rsf.variableNames count]; ii++) {
-      self.treeView.variableMarkings[ii] = @NO;
-    }
-    [self.treeView redraw];
   }
 }
 
@@ -161,6 +107,13 @@
     self.minValueLabel.text = @"1";
     self.maxValueLabel.text = [NSString stringWithFormat:@"%d", (int)[self.rsf.trees count]];
     
+    self.variableMarkings = [[NSMutableArray alloc] initWithCapacity:[self.rsf.variableNames count]];
+    self.subTreeMarkings  = [[NSMutableArray alloc] initWithCapacity:[self.rsf.variableNames count]];
+    for (int i=0; i < [self.rsf.variableNames count]; i++) {
+      self.variableMarkings[i] = @NO;
+      self.subTreeMarkings[i] = @NO;
+    }
+    
     self.title = [@"Random Survival Forest: " stringByAppendingString:rsfName];
     
     // Get master controller in split view
@@ -172,13 +125,90 @@
   }
 }
 
+
+#pragma mark - UIScrollViewDelegate methods
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
   return self.treeView;
 }
 
+#pragma mark - UI Actions
+- (IBAction)nextTree:(UIButton *)sender
+{
+  if (self.currentTreeIdx < [self.rsf.trees count]-2) {
+    self.currentTreeIdx = self.currentTreeIdx + 1;
+    [self showTree:self.currentTreeIdx];
+    self.treeSlider.value = self.currentTreeIdx + 1;
+    [self.treeView redraw];
+  }
+}
+
+- (IBAction)previousTree:(UIButton *)sender
+{
+  if (self.currentTreeIdx > 0) {
+    self.currentTreeIdx = self.currentTreeIdx - 1;
+    [self showTree:self.currentTreeIdx];
+    self.treeSlider.value = self.currentTreeIdx + 1;
+  }
+}
+
+- (IBAction)treeInfoPressed:(UIButton *)sender
+{
+  NSLog(@"Todo, popup tree information");
+}
+
+- (IBAction)legendSwitch:(UISwitch *)sender
+{
+  if (self.treeViewContainer.subviews[0]) {
+    RSFTreeView *v = self.treeViewContainer.subviews[0];
+    v.legend = !sender.on;
+  }
+}
+- (IBAction)sliderMoved:(UISlider *)sender
+{
+  if (sender.value-1 != self.currentTreeIdx) {
+    self.currentTreeIdx = self.treeSlider.value - 1;
+    [self showTree:self.currentTreeIdx];
+  }
+}
+- (IBAction)clearMarkings:(UIButton *)sender
+{
+  if (self.treeView) {
+    for (int ii=0; ii < [self.rsf.variableNames count]; ii++) {
+      self.variableMarkings[ii] = @NO;
+      self.subTreeMarkings[ii] = @NO;
+    }
+    [self.treeView redraw];
+  }
+}
+
+#pragma mark - RSFTreeMarkingDelegate methods
+-(BOOL)isVariableMarked:(int)nodeIdx
+{
+  return [self.variableMarkings[nodeIdx-1] isEqual:@YES] ? YES : NO;
+}
+
+-(BOOL)isSubTreeMarked:(int)nodeIdx
+{
+  return [self.subTreeMarkings[nodeIdx-1] isEqual:@YES] ? YES : NO;
+}
+
+#pragma mark - VariablesTableViewControllerDelegate method
+-(void)switchVariableMarking:(int)variableIdx
+{
+  self.variableMarkings[variableIdx-1] = [self.variableMarkings[variableIdx-1] isEqual:@YES] ? @NO : @YES;
+  [self.treeView redraw];
+}
+
+-(void)subTreeSwitch:(int)varIdx
+{
+  self.subTreeMarkings[varIdx-1] =  [self.subTreeMarkings[varIdx-1] isEqual:@YES] ? @NO  :@YES;
+  [self.treeView redraw];
+}
+
+
 #pragma mark - Show current tree
--(void)showTree:(int)treeIdx withMarkings:(NSMutableArray *)markings
+-(void)showTree:(int)treeIdx
 {
   if (treeIdx < [self.rsf.trees count]) {
     for (UIView *v in self.treeViewContainer.subviews) {
@@ -196,15 +226,7 @@
     self.treeView.nodeLabel = NODE_LEVEL;
     self.treeView.rootNode = self.rootNode;
     self.treeView.variableNames = self.rsf.variableNames;
-
-    if (!markings) {
-      self.treeView.variableMarkings = [[NSMutableArray alloc] init];
-      for (int ii=0; ii < [self.rsf.variableNames count]; ii++) {
-        [self.treeView.variableMarkings addObject:@NO];
-      }
-    } else {
-      self.treeView.variableMarkings = markings;
-    }
+    self.treeView.delegate = self;
 
     CGSize treeSize = [self.treeView sizeOfGraph];
     self.treeView.frame = CGRectMake(0.0, 0.0, treeSize.width, treeSize.height);
@@ -224,10 +246,13 @@
     // Add gesture recognizers
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.treeView addGestureRecognizer:tapGestureRecognizer];
-    
+
+    UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+    doubleTapRecognizer.numberOfTapsRequired = 2;
+    [self.treeView addGestureRecognizer:doubleTapRecognizer];
     
     UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    longPressGestureRecognizer.minimumPressDuration = 1.0; // seconds
+//    longPressGestureRecognizer.minimumPressDuration = 1.0; // seconds
     [self.treeView addGestureRecognizer:longPressGestureRecognizer];
     
     // Add view
@@ -238,6 +263,8 @@
   }
 }
 
+#pragma mark - Gesture recognizers
+
 -(void)longPress:(UILongPressGestureRecognizer *)gesture
 {
   if (gesture.state==UIGestureRecognizerStateBegan) {
@@ -245,9 +272,45 @@
     CGPoint p = [gesture locationInView:view];
     RSFNode *longPressNode = [view tappedNode:p];
 
-    if (longPressNode && ![longPressNode isLeaf]) {
-      NSLog(@"Long press on node %@\n", self.rsf.variableNames[longPressNode.variableIdx-1]);
+    int subTreeVarIdx = [self.rsf.trees[self.currentTreeIdx] subTreeVariableIndex:longPressNode withMarkings:self.subTreeMarkings];
+    if (subTreeVarIdx > 0) {
+      // Node in a marked subtree
+      if (longPressNode && [longPressNode isLeaf]) {
+        // Is a leaf, can only remove marking
+        self.subTreeMarkings[subTreeVarIdx-1] =  @NO;
+      } else if(longPressNode){
+        // Is not a leaf, flip marking
+        self.subTreeMarkings[subTreeVarIdx-1] =  [self.subTreeMarkings[subTreeVarIdx-1] isEqual:@YES] ? @NO  :@YES;
+      }
+    } else {
+      // Node not in a marked subtree
+      if (longPressNode && ![longPressNode isLeaf]) {
+        // Mark node opnly if it is not a leaf
+        self.subTreeMarkings[longPressNode.variableIdx-1] =  @YES;
+      }
+    }    
+    [self.treeView redraw];
+  }
+}
+
+
+
+
+-(void)doubleTap:(UITapGestureRecognizer *)gesture
+{
+  if (gesture.state == UIGestureRecognizerStateRecognized) {
+    CGFloat newZoomScale;
+    CGFloat zoomDelta = (self.treeViewContainer.maximumZoomScale - self.treeViewContainer.minimumZoomScale)*0.3;
+    
+    if (self.treeViewContainer.zoomScale > self.treeViewContainer.maximumZoomScale - zoomDelta) {
+      // Zoom out to show whole graph
+      newZoomScale = self.treeViewContainer.minimumZoomScale;
+    } else {
+      // Zoom in a little
+      newZoomScale = MIN(self.treeViewContainer.zoomScale + zoomDelta, self.treeViewContainer.maximumZoomScale);
     }
+//    NSLog(@"doubleTap: zoomScale = %f, maximimZoomScale = %f, minimumZoomScale = %f, newZoomScale = %f", self.treeViewContainer.zoomScale, self.treeViewContainer.maximumZoomScale, self.treeViewContainer.minimumZoomScale, newZoomScale);
+    [self.treeViewContainer setZoomScale:newZoomScale animated:YES];
   }
 }
 
@@ -258,16 +321,9 @@
   RSFNode *tappedNode = [view tappedNode:p];
   
   if (tappedNode && ![tappedNode isLeaf]) {
-    view.variableMarkings[tappedNode.variableIdx-1] = [view.variableMarkings[tappedNode.variableIdx-1] isEqual:@YES] ? @NO : @YES;
+    self.variableMarkings[tappedNode.variableIdx-1] = [self.variableMarkings[tappedNode.variableIdx-1] isEqual:@YES] ? @NO : @YES;
     [view redraw];
   }
-}
-
--(void)switchVariableMarking:(int)variableIdx
-{
-  NSLog(@"tapped variable %@", self.rsf.variableNames[variableIdx-1] );
-  self.treeView.variableMarkings[variableIdx-1] = [self.treeView.variableMarkings[variableIdx-1] isEqual:@YES] ? @NO : @YES;
-  [self.treeView redraw];
 }
 
 -(NSString *)treeInfo:(int)treeIdx
@@ -279,6 +335,7 @@
   }
 }
 
+#pragma mark - View navigation
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
   if ([segue.destinationViewController isKindOfClass:[TreeSelectorTableViewController class]]) {
@@ -288,12 +345,15 @@
   }
 }
 
+#pragma mark - A new RSFTree selected callback
 -(void)selectedTreeWithName:(NSString *)treeName
 {
   [self.treeSelectionPopoverController dismissPopoverAnimated:YES];
-  [self setup:treeName withURLs:[self.rsfFiles objectForKey:treeName]];
-  self.treeSlider.value = 1;
-  [self showTree:0 withMarkings:nil];
+  dispatch_async(dispatch_queue_create("RSFLoadqueue", DISPATCH_QUEUE_SERIAL), ^(void){
+    [self setup:treeName withURLs:[self.rsfFiles objectForKey:treeName]];
+    self.treeSlider.value = 1;
+    dispatch_async(dispatch_get_main_queue(), ^(void){[self showTree:0];});
+  });
 }
 
 @end

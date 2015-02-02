@@ -87,6 +87,33 @@ NodePositionMake(double x, double y)
   }
 }
 
+-(int)subTreeVariableIndex:(RSFNode *)node withMarkings:(NSArray *)markings
+{
+  int varIdx = [self subTreeVariableParse:node withMarkings:markings currentMark:0];
+  return varIdx;
+}
+
+
+-(int)subTreeVariableParse:(RSFNode *)node withMarkings:(NSArray *)markings currentMark:(int)currentSubTreeIdx
+{
+  int varIdx = 0;
+  int newCurrSubbTreeVarIdx = currentSubTreeIdx;
+  if (self.variableIdx>0 && [markings[self.variableIdx-1] isEqual:@YES]) {
+    newCurrSubbTreeVarIdx = self.variableIdx;
+  }
+  
+  if ([node isEqual:self]) {
+    varIdx = newCurrSubbTreeVarIdx;
+  } else {
+    varIdx = [self.left subTreeVariableParse:node withMarkings:markings currentMark:newCurrSubbTreeVarIdx];
+    if (varIdx == 0) {
+      varIdx = [self.right subTreeVariableParse:node withMarkings:markings currentMark:newCurrSubbTreeVarIdx];
+    }
+  }
+  
+  return varIdx;
+}
+
 #pragma mark - Tree layout
 -(void)layoutTree
 {

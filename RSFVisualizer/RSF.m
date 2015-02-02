@@ -88,8 +88,6 @@
   self.trees = trees;
 }
 
-
-
 -(RSFNode *)ReadRSFTree:(IDGenerator *)idGen onLevel:(int)level withReader:(RSFFileReader *)fr
 {
   RSFNodeSpec *nodeSpec = [fr readRSFEntry:idGen];
@@ -112,4 +110,6 @@
   }
   return node;
 }
+
+
 @end

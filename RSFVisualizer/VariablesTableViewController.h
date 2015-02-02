@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "RSF.h"
+#import "RSFTreeMarkingDelegate.h"
 
 @protocol VariablesTableViewControllerDelegate <NSObject>
 
 -(void)switchVariableMarking:(int)variableIdx;
+-(void)subTreeSwitch:(int)varIdx;
 
 @end
 
 @interface VariablesTableViewController : UITableViewController
 @property (nonatomic, weak) RSF *rsf;
-@property (nonatomic, strong) id<VariablesTableViewControllerDelegate> delegate;
+@property (nonatomic, strong) id<VariablesTableViewControllerDelegate,RSFTreeMarkingDelegate> delegate;
 @end

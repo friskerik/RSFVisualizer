@@ -35,4 +35,7 @@ NodePosition NodePositionMake(double x, double y);
 -(int)depth;
 -(BOOL)isLeaf;
 -(BOOL)hasLayout;
+
+-(int)subTreeVariableIndex:(RSFNode *)node withMarkings:(NSArray *)markings;
+
 @end

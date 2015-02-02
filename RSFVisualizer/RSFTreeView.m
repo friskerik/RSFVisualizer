@@ -109,16 +109,8 @@
 
 - (void)drawRect:(CGRect)rect
 {
-  [self drawNodes:self.rootNode]; // draw nodes and edges
+  [self drawNodes:self.rootNode markSubTree:NO]; // draw nodes and edges
   [self drawNodeInformation:self.rootNode]; // draw node information
-
-//  CGRect graphRect = CGRectZero;
-//  [self sizeNodes:self.rootNode inRect:&graphRect];
-//  [self sizeNodeInformation:self.rootNode inRect:&graphRect];
-//
-//  UIBezierPath *graphBorder = [UIBezierPath bezierPathWithRect:graphRect];
-//  [[UIColor redColor] setStroke];
-//  [graphBorder stroke];
   
   if (self.drawBorder) {
     UIBezierPath *border = [UIBezierPath bezierPathWithRect:self.bounds];
@@ -215,27 +207,41 @@
   return ret;
 }
 
--(void)drawNodes:(RSFNode *)node
+-(void)drawNodes:(RSFNode *)node markSubTree:(BOOL)inMarkedSubTree
 {
   if (node) {
     CGPoint p = [self screenPoint:node.pos]; // Center point of node
     
-    UIBezierPath *path = [[UIBezierPath alloc] init];
-    
     CGFloat r = NODE_RADIUS*self.scaleFactor*0.92;
+    UIBezierPath *path = [[UIBezierPath alloc] init];
     path = [UIBezierPath bezierPathWithArcCenter:p radius:r startAngle:0 endAngle:2*M_PI clockwise:YES];
     
-    [[UIColor blackColor] setStroke];
+    BOOL nodeIsLeaf  = node.variableIdx==0;
+    BOOL markSubTree = nodeIsLeaf ? inMarkedSubTree : inMarkedSubTree || [self.delegate isSubTreeMarked:node.variableIdx];
+    BOOL markNode = nodeIsLeaf ? inMarkedSubTree : [self.delegate isVariableMarked:node.variableIdx];
     
-    if (node.variableIdx==0 || [self.variableMarkings[node.variableIdx-1] isEqual:@NO] ) {
+    if (!(markNode || markSubTree)) {
       [[UIColor yellowColor] setFill];
+      [path fill];
+    } else if( markSubTree && (!markNode || nodeIsLeaf) ){
+      [[UIColor colorWithRed:136.0/255 green:207.0/255 blue:103.0/255 alpha:1] setFill]; // subTreeColor
+      [path fill];
+    } else if( !markSubTree && (markNode || nodeIsLeaf) ){
+      [[UIColor colorWithRed:102.0/255 green:178.0/255 blue:1 alpha:1] setFill]; // marked Node color
+      [path fill];
     } else {
-      [[UIColor colorWithRed:102.0/255 green:178.0/255 blue:1 alpha:1] setFill];
+      UIBezierPath *fillPath = [[UIBezierPath alloc] init];
+      fillPath = [UIBezierPath bezierPathWithArcCenter:p radius:r startAngle:-M_PI*45.0/180 endAngle:M_PI*135.0/180 clockwise:YES];
+      [[UIColor colorWithRed:102.0/255 green:178.0/255 blue:1 alpha:1] setFill];  // marked Node color
+      [fillPath fill];
+      fillPath = [UIBezierPath bezierPathWithArcCenter:p radius:r startAngle:M_PI*135.0/180 endAngle:-M_PI*45.0/180 clockwise:YES];
+      [[UIColor colorWithRed:136.0/255 green:207.0/255 blue:103.0/255 alpha:1] setFill]; // subTreeColor
+      [fillPath fill];
     }
     
+    [[UIColor blackColor] setStroke];
     [path setLineWidth:2.0*self.scaleFactor];
     
-    [path fill];
     [path stroke];
     
     NSString *s;
@@ -256,8 +262,8 @@
     [s drawAtPoint:labelp withAttributes:@{NSFontAttributeName : f}];
 
     [self drawEdges:node];
-    [self drawNodes:node.left];
-    [self drawNodes:node.right];
+    [self drawNodes:node.left markSubTree:markSubTree];
+    [self drawNodes:node.right markSubTree:markSubTree];
   }
 }
 
