@@ -298,6 +298,7 @@
 {
   // Draw stem
   UIBezierPath *arrow = [[UIBezierPath alloc] init];
+   
   [arrow moveToPoint:p1];
   [arrow addLineToPoint:p2];
   [arrow stroke];

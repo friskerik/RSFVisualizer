@@ -16,6 +16,8 @@
 		AE00223A1A65CD21008B2B1B /* fleet.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE0022381A65CD21008B2B1B /* fleet.txt */; };
 		AE00223B1A65CD21008B2B1B /* fleet.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE0022391A65CD21008B2B1B /* fleet.xml */; };
 		AE05F6C61A7446FB00CF07BC /* TreeSelectorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE05F6C51A7446FB00CF07BC /* TreeSelectorTableViewController.m */; };
+		AE0DF6991AAB9521000208DE /* NodeConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0DF6981AAB9521000208DE /* NodeConstraints.m */; };
+		AE0DF69C1AAB984F000208DE /* NodeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = AE0DF69B1AAB984F000208DE /* NodeConstraint.m */; };
 		AE513BFF1A7055320086D7DE /* RSFTreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE513BFD1A7055320086D7DE /* RSFTreeView.m */; };
 		AE67E1601A6B23F000DC5FA9 /* rsf_200.txt in Resources */ = {isa = PBXBuildFile; fileRef = AE67E15E1A6B23F000DC5FA9 /* rsf_200.txt */; };
 		AE67E1611A6B23F000DC5FA9 /* rsf_200.xml in Resources */ = {isa = PBXBuildFile; fileRef = AE67E15F1A6B23F000DC5FA9 /* rsf_200.xml */; };
@@ -59,6 +61,10 @@
 		AE0022391A65CD21008B2B1B /* fleet.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fleet.xml; sourceTree = "<group>"; };
 		AE05F6C41A7446FB00CF07BC /* TreeSelectorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeSelectorTableViewController.h; sourceTree = "<group>"; };
 		AE05F6C51A7446FB00CF07BC /* TreeSelectorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeSelectorTableViewController.m; sourceTree = "<group>"; };
+		AE0DF6971AAB9521000208DE /* NodeConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeConstraints.h; sourceTree = "<group>"; };
+		AE0DF6981AAB9521000208DE /* NodeConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeConstraints.m; sourceTree = "<group>"; };
+		AE0DF69A1AAB984F000208DE /* NodeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeConstraint.h; sourceTree = "<group>"; };
+		AE0DF69B1AAB984F000208DE /* NodeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeConstraint.m; sourceTree = "<group>"; };
 		AE49A1611A7D26F7007E6F18 /* RSFTreeMarkingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFTreeMarkingDelegate.h; sourceTree = "<group>"; };
 		AE513BFD1A7055320086D7DE /* RSFTreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFTreeView.m; sourceTree = "<group>"; };
 		AE513BFE1A7055320086D7DE /* RSFTreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFTreeView.h; sourceTree = "<group>"; };
@@ -225,6 +231,10 @@
 				AE00222D1A65B4C6008B2B1B /* RSFFileReader.m */,
 				AE0022351A65C4FA008B2B1B /* RSF.h */,
 				AE0022361A65C4FA008B2B1B /* RSF.m */,
+				AE0DF6971AAB9521000208DE /* NodeConstraints.h */,
+				AE0DF6981AAB9521000208DE /* NodeConstraints.m */,
+				AE0DF69A1AAB984F000208DE /* NodeConstraint.h */,
+				AE0DF69B1AAB984F000208DE /* NodeConstraint.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -348,8 +358,10 @@
 				AE05F6C61A7446FB00CF07BC /* TreeSelectorTableViewController.m in Sources */,
 				AE8765E11A64487B0013529B /* AppDelegate.m in Sources */,
 				AE8765DE1A64487B0013529B /* main.m in Sources */,
+				AE0DF69C1AAB984F000208DE /* NodeConstraint.m in Sources */,
 				AE0022341A65C0EA008B2B1B /* IDGenerator.m in Sources */,
 				AE87660B1A6459C80013529B /* RSFNode.m in Sources */,
+				AE0DF6991AAB9521000208DE /* NodeConstraints.m in Sources */,
 				AE9613E41A6856830067F4C0 /* RSFNode+additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

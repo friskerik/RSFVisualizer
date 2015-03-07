@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NodeConstraints.h"
 
 typedef struct _NodePosition
 {
@@ -22,6 +23,7 @@ NodePosition NodePositionMake(double x, double y);
 @property (nonatomic) int variableIdx;
 @property (nonatomic) int level;
 @property (nonatomic) double splitValue;
+@property (nonatomic, strong) NodeConstraints *constraints;
 
 @property (nonatomic) NodePosition pos;
 @property (nonatomic, strong) RSFNode *left;

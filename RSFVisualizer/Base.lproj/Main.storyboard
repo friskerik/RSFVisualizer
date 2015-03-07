@@ -32,7 +32,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uaQ-kF-NBF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1632" y="-429"/>
+            <point key="canvasLocation" x="-8080" y="-483"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Vqk-OC-fC5">
@@ -48,7 +48,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IRU-TL-kgg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="814" y="-429"/>
+            <point key="canvasLocation" x="-8898" y="-483"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="62z-Uc-B4F">
@@ -61,7 +61,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b96-FC-7Jj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4" y="-106.5"/>
+            <point key="canvasLocation" x="-9716" y="-160.5"/>
         </scene>
         <!--Tree name-->
         <scene sceneID="tne-QT-ifu">
@@ -75,25 +75,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTe-sH-xlO">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="39" id="0qu-RO-LKK"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="0qu-RO-LKK"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular">
-                                    <mask key="constraints">
-                                        <include reference="0qu-RO-LKK"/>
-                                    </mask>
-                                </variation>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cz2-z8-SSx">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <constraints>
@@ -192,6 +173,25 @@
                                     <action selector="nextTree:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Nwm-dn-cah"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTe-sH-xlO">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="39" id="0qu-RO-LKK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="0qu-RO-LKK"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="0qu-RO-LKK"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -251,7 +251,6 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="fTe-sH-xlO"/>
                                 <exclude reference="Cz2-z8-SSx"/>
                                 <exclude reference="lVV-cw-bAA"/>
                                 <exclude reference="Fbo-cl-i0G"/>
@@ -261,22 +260,18 @@
                                 <exclude reference="2Bb-WW-deF"/>
                                 <exclude reference="rL4-WH-eam"/>
                                 <exclude reference="JPB-kE-vCe"/>
+                                <exclude reference="fTe-sH-xlO"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="1aF-Md-h3C"/>
-                                <exclude reference="G7y-WD-lA0"/>
-                                <exclude reference="Nby-Pz-1iE"/>
-                                <exclude reference="Jfg-Zr-cMR"/>
-                                <exclude reference="WXe-2c-1Yd"/>
-                                <exclude reference="m7f-aJ-81q"/>
+                                <exclude reference="RMW-NC-YhP"/>
+                                <exclude reference="lcZ-xD-6id"/>
+                                <exclude reference="rI4-FX-WjT"/>
+                                <exclude reference="3Gi-nj-RHC"/>
+                                <exclude reference="FL9-Eb-XHA"/>
+                                <exclude reference="FUZ-qO-Vig"/>
+                                <exclude reference="o1J-s8-2NO"/>
                                 <exclude reference="AbT-dt-UwT"/>
                                 <exclude reference="QPX-Me-aUk"/>
-                                <exclude reference="AMV-kY-S5X"/>
-                                <exclude reference="Q9W-PD-8J3"/>
-                                <exclude reference="jC3-ng-6gt"/>
-                                <exclude reference="Oxp-XQ-f9O"/>
-                                <exclude reference="SRQ-OZ-7wF"/>
-                                <exclude reference="eTn-HL-Cfd"/>
                                 <exclude reference="1Kz-1s-I8W"/>
                                 <exclude reference="3vG-jz-rFt"/>
                                 <exclude reference="54N-dS-qAn"/>
@@ -287,33 +282,37 @@
                                 <exclude reference="cwz-6q-fPl"/>
                                 <exclude reference="go6-I0-0LD"/>
                                 <exclude reference="vB7-PC-PZF"/>
-                                <exclude reference="RMW-NC-YhP"/>
-                                <exclude reference="lcZ-xD-6id"/>
-                                <exclude reference="rI4-FX-WjT"/>
-                                <exclude reference="Csw-Ju-IgI"/>
+                                <exclude reference="DA6-hN-OCg"/>
+                                <exclude reference="hTW-4e-u5j"/>
+                                <exclude reference="odl-a7-2HY"/>
+                                <exclude reference="rqQ-gt-vQ5"/>
+                                <exclude reference="Oxp-XQ-f9O"/>
+                                <exclude reference="SRQ-OZ-7wF"/>
+                                <exclude reference="eTn-HL-Cfd"/>
+                                <exclude reference="0zk-lT-3YJ"/>
+                                <exclude reference="Jfg-Zr-cMR"/>
+                                <exclude reference="WXe-2c-1Yd"/>
+                                <exclude reference="m7f-aJ-81q"/>
+                                <exclude reference="1aF-Md-h3C"/>
+                                <exclude reference="G7y-WD-lA0"/>
+                                <exclude reference="Nby-Pz-1iE"/>
                                 <exclude reference="5Kk-aR-q1L"/>
                                 <exclude reference="626-dH-bVV"/>
                                 <exclude reference="S1u-G9-gFK"/>
                                 <exclude reference="Txk-ZL-bof"/>
                                 <exclude reference="bYx-MC-lG9"/>
                                 <exclude reference="vxb-7b-c5w"/>
-                                <exclude reference="DA6-hN-OCg"/>
-                                <exclude reference="hTW-4e-u5j"/>
-                                <exclude reference="odl-a7-2HY"/>
-                                <exclude reference="rqQ-gt-vQ5"/>
-                                <exclude reference="0zk-lT-3YJ"/>
                                 <exclude reference="8P3-8v-C7m"/>
                                 <exclude reference="jWK-FZ-Gd2"/>
                                 <exclude reference="ufV-Nq-qcW"/>
-                                <exclude reference="3Gi-nj-RHC"/>
-                                <exclude reference="FL9-Eb-XHA"/>
-                                <exclude reference="FUZ-qO-Vig"/>
-                                <exclude reference="o1J-s8-2NO"/>
+                                <exclude reference="Csw-Ju-IgI"/>
+                                <exclude reference="AMV-kY-S5X"/>
+                                <exclude reference="Q9W-PD-8J3"/>
+                                <exclude reference="jC3-ng-6gt"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
                             <mask key="subviews">
-                                <include reference="fTe-sH-xlO"/>
                                 <include reference="Cz2-z8-SSx"/>
                                 <include reference="lVV-cw-bAA"/>
                                 <include reference="Fbo-cl-i0G"/>
@@ -323,25 +322,18 @@
                                 <include reference="2Bb-WW-deF"/>
                                 <include reference="rL4-WH-eam"/>
                                 <include reference="JPB-kE-vCe"/>
+                                <include reference="fTe-sH-xlO"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="1aF-Md-h3C"/>
-                                <exclude reference="G7y-WD-lA0"/>
-                                <include reference="Nby-Pz-1iE"/>
-                                <exclude reference="QgK-6J-ID6"/>
-                                <exclude reference="haF-xc-kmF"/>
-                                <exclude reference="iDm-oN-weq"/>
-                                <include reference="Jfg-Zr-cMR"/>
-                                <include reference="WXe-2c-1Yd"/>
-                                <include reference="m7f-aJ-81q"/>
+                                <exclude reference="RMW-NC-YhP"/>
+                                <include reference="lcZ-xD-6id"/>
+                                <include reference="rI4-FX-WjT"/>
+                                <exclude reference="3Gi-nj-RHC"/>
+                                <include reference="FL9-Eb-XHA"/>
+                                <exclude reference="FUZ-qO-Vig"/>
+                                <include reference="o1J-s8-2NO"/>
                                 <include reference="AbT-dt-UwT"/>
                                 <exclude reference="QPX-Me-aUk"/>
-                                <include reference="AMV-kY-S5X"/>
-                                <include reference="Q9W-PD-8J3"/>
-                                <include reference="jC3-ng-6gt"/>
-                                <include reference="Oxp-XQ-f9O"/>
-                                <include reference="SRQ-OZ-7wF"/>
-                                <include reference="eTn-HL-Cfd"/>
                                 <exclude reference="1Kz-1s-I8W"/>
                                 <exclude reference="3vG-jz-rFt"/>
                                 <include reference="54N-dS-qAn"/>
@@ -352,35 +344,43 @@
                                 <exclude reference="cwz-6q-fPl"/>
                                 <include reference="go6-I0-0LD"/>
                                 <exclude reference="vB7-PC-PZF"/>
-                                <exclude reference="RMW-NC-YhP"/>
-                                <include reference="lcZ-xD-6id"/>
-                                <include reference="rI4-FX-WjT"/>
-                                <include reference="Csw-Ju-IgI"/>
+                                <exclude reference="DA6-hN-OCg"/>
+                                <include reference="hTW-4e-u5j"/>
+                                <include reference="odl-a7-2HY"/>
+                                <include reference="rqQ-gt-vQ5"/>
+                                <include reference="Oxp-XQ-f9O"/>
+                                <include reference="SRQ-OZ-7wF"/>
+                                <include reference="eTn-HL-Cfd"/>
+                                <include reference="0zk-lT-3YJ"/>
+                                <include reference="Jfg-Zr-cMR"/>
+                                <include reference="WXe-2c-1Yd"/>
+                                <include reference="m7f-aJ-81q"/>
+                                <include reference="1aF-Md-h3C"/>
+                                <exclude reference="G7y-WD-lA0"/>
+                                <include reference="Nby-Pz-1iE"/>
+                                <exclude reference="QgK-6J-ID6"/>
+                                <exclude reference="haF-xc-kmF"/>
+                                <exclude reference="iDm-oN-weq"/>
                                 <exclude reference="5Kk-aR-q1L"/>
                                 <exclude reference="626-dH-bVV"/>
                                 <include reference="S1u-G9-gFK"/>
                                 <include reference="Txk-ZL-bof"/>
                                 <include reference="bYx-MC-lG9"/>
                                 <exclude reference="vxb-7b-c5w"/>
-                                <exclude reference="DA6-hN-OCg"/>
-                                <include reference="hTW-4e-u5j"/>
-                                <include reference="odl-a7-2HY"/>
-                                <include reference="rqQ-gt-vQ5"/>
-                                <include reference="0zk-lT-3YJ"/>
                                 <exclude reference="8P3-8v-C7m"/>
                                 <include reference="jWK-FZ-Gd2"/>
                                 <include reference="ufV-Nq-qcW"/>
-                                <exclude reference="3Gi-nj-RHC"/>
-                                <include reference="FL9-Eb-XHA"/>
-                                <exclude reference="FUZ-qO-Vig"/>
-                                <include reference="o1J-s8-2NO"/>
+                                <include reference="Csw-Ju-IgI"/>
+                                <include reference="AMV-kY-S5X"/>
+                                <include reference="Q9W-PD-8J3"/>
+                                <include reference="jC3-ng-6gt"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Tree name" id="E5Q-jz-REG">
                         <barButtonItem key="rightBarButtonItem" title="Select RSF" id="UiT-fT-ajD">
                             <connections>
-                                <segue destination="cvD-65-N9P" kind="popoverPresentation" popoverAnchorBarButtonItem="UiT-fT-ajD" id="oj0-15-KRQ">
+                                <segue destination="cvD-65-N9P" kind="popoverPresentation" popoverAnchorBarButtonItem="UiT-fT-ajD" id="2pr-Vu-OIt">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                 </segue>
                             </connections>
@@ -388,7 +388,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="legendSwitch" destination="Fbo-cl-i0G" id="fQy-NH-AoR"/>
-                        <outlet property="maxValueLabel" destination="fTe-sH-xlO" id="FYC-23-JIX"/>
+                        <outlet property="maxValueLabel" destination="fTe-sH-xlO" id="5sx-Jp-87J"/>
                         <outlet property="minValueLabel" destination="Cz2-z8-SSx" id="Yx7-Pb-Msj"/>
                         <outlet property="treeLabel" destination="966-6H-IG8" id="xqG-2C-VgP"/>
                         <outlet property="treeSlider" destination="hxa-Ta-PCI" id="NDd-tb-2KX"/>
@@ -397,7 +397,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1756" y="326.25"/>
+            <point key="canvasLocation" x="-8080" y="272.25"/>
         </scene>
         <!--Tree Selector Table View Controller-->
         <scene sceneID="oNO-4R-OiC">
@@ -442,7 +442,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B1z-9f-NeB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2501" y="326.25"/>
+            <point key="canvasLocation" x="-7240" y="272.25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="w8a-kO-17E">
@@ -460,7 +460,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HcS-8X-27L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="814" y="326.25"/>
+            <point key="canvasLocation" x="-8898" y="272.25"/>
         </scene>
     </scenes>
     <resources>

@@ -25,6 +25,8 @@
   NSString *rsfFilePath = [txtURL path];
   NSString *xmlFilePath = [xmlURL path];
   
+  self.title = [[rsfFilePath lastPathComponent] stringByDeletingPathExtension];
+  
   RSFFileReader *fr = [[RSFFileReader alloc] init];
   
   // Hande XML file
@@ -40,8 +42,9 @@
   
   NSMutableArray *trees = [[NSMutableArray alloc] init];
   RSFNode *rootNode;
-  
-  while ((rootNode = [self ReadRSFTree:idGen onLevel:0 withReader:fr])) {
+  NSMutableArray *nodeConstraints = [[NSMutableArray alloc] init];
+
+  while ((rootNode = [self ReadRSFTree:idGen onLevel:0 withReader:fr currentNodeConstraints:nodeConstraints])) {
     if (rootNode) {
       [trees addObject:rootNode];
       [idGen reset];
@@ -55,6 +58,7 @@
 -(void)setRsfName:(NSString *)rsfName
 {
   _rsfName = rsfName;
+  self.title = rsfName;
   
   NSString *rsfTxtFileName = [rsfName stringByAppendingString:@".txt"];
   NSString *rsfXMLFileName = [rsfName stringByAppendingString:@".xml"];
@@ -77,8 +81,9 @@
   
   NSMutableArray *trees = [[NSMutableArray alloc] init];
   RSFNode *rootNode;
+  NSMutableArray *nodeConstraints = [[NSMutableArray alloc] init];
   
-  while ((rootNode = [self ReadRSFTree:idGen onLevel:0 withReader:fr])) {
+  while ((rootNode = [self ReadRSFTree:idGen onLevel:0 withReader:fr currentNodeConstraints:nodeConstraints])) {
     if (rootNode) {
       [trees addObject:rootNode];
       [idGen reset];
@@ -88,7 +93,7 @@
   self.trees = trees;
 }
 
--(RSFNode *)ReadRSFTree:(IDGenerator *)idGen onLevel:(int)level withReader:(RSFFileReader *)fr
+-(RSFNode *)ReadRSFTree:(IDGenerator *)idGen onLevel:(int)level withReader:(RSFFileReader *)fr currentNodeConstraints:(NSMutableArray *)nodeConstraintList
 {
   RSFNodeSpec *nodeSpec = [fr readRSFEntry:idGen];
   RSFNode *node = nil;
@@ -101,11 +106,23 @@
     node.variableIdx = nodeSpec.parmID;
     node.level = level;
     node.splitValue = nodeSpec.contPT;
-
+    
     if (nodeSpec.parmID != 0) {
       // This is not a leaf node, read the sub-trees
-      node.left  = [self ReadRSFTree:idGen onLevel:level+1 withReader:fr];
-      node.right = [self ReadRSFTree:idGen onLevel:level+1 withReader:fr];
+      NodeConstraint *c = [[NodeConstraint alloc] initWithUpperBound:[NSNumber numberWithDouble:node.splitValue]];
+      [nodeConstraintList addObject:@{@"variableIndex": [NSNumber numberWithInt:node.variableIdx], @"constraint" : c}];
+      node.left  = [self ReadRSFTree:idGen onLevel:level+1 withReader:fr currentNodeConstraints:nodeConstraintList];
+      [nodeConstraintList removeLastObject];
+      
+      c = [[NodeConstraint alloc] initWithLowerBound:[NSNumber numberWithDouble:node.splitValue]];
+      [nodeConstraintList addObject:@{@"variableIndex": [NSNumber numberWithInt:node.variableIdx], @"constraint" : c}];
+      node.right = [self ReadRSFTree:idGen onLevel:level+1 withReader:fr currentNodeConstraints:nodeConstraintList];
+      [nodeConstraintList removeLastObject];
+    } else {
+      // Now I've hit a leaf node
+//      NSLog(@"Leaf node with %ld constraints\n", [nodeConstraintList count]);
+      node.constraints = [[NodeConstraints alloc] initWithConstraintList:nodeConstraintList];
+//      [node.constraints debugPrint];
     }
   }
   return node;

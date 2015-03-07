@@ -32,8 +32,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *treeLabel;
 @property (weak, nonatomic) IBOutlet UISlider *treeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *minValueLabel;
-@property (weak, nonatomic) IBOutlet UILabel *maxValueLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *legendSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *maxValueLabel;
 @end
 
 @implementation ViewController
@@ -61,7 +61,7 @@
     [treeNames addObject:k];
   }
   self.rsfTreeNames = treeNames;
-  self.treeLabel.text = @"";  
+  self.treeLabel.text = @"";
 }
 
 -(void)viewDidLayoutSubviews
@@ -102,20 +102,14 @@
   if ([self.rsf.trees count]>0) {
     NSLog(@"Read %lu tree(s) from file %@\n", (unsigned long)[self.rsf.trees count], rsfName);
     self.currentTreeIdx = 0;
-    self.treeSlider.minimumValue = 1;
-    self.treeSlider.maximumValue = [self.rsf.trees count];
-    self.minValueLabel.text = @"1";
-    self.maxValueLabel.text = [NSString stringWithFormat:@"%d", (int)[self.rsf.trees count]];
-    
+
     self.variableMarkings = [[NSMutableArray alloc] initWithCapacity:[self.rsf.variableNames count]];
     self.subTreeMarkings  = [[NSMutableArray alloc] initWithCapacity:[self.rsf.variableNames count]];
     for (int i=0; i < [self.rsf.variableNames count]; i++) {
       self.variableMarkings[i] = @NO;
       self.subTreeMarkings[i] = @NO;
     }
-    
-    self.title = [@"Random Survival Forest: " stringByAppendingString:rsfName];
-    
+    [self updateUI];
     // Get master controller in split view
     VariablesTableViewController *vtvc = (VariablesTableViewController *)[self.splitViewController.viewControllers[0] topViewController];
     vtvc.rsf = self.rsf;
@@ -125,6 +119,16 @@
   }
 }
 
+-(void)updateUI
+{
+  if (self.rsf) {
+    self.treeSlider.minimumValue = 1;
+    self.treeSlider.maximumValue = [self.rsf.trees count];
+    self.minValueLabel.text = @"1";
+    self.maxValueLabel.text = [NSString stringWithFormat:@"%d", (int)[self.rsf.trees count]];
+    self.title = [@"Random Survival Forest: " stringByAppendingString:self.rsf.title];
+  }
+}
 
 #pragma mark - UIScrollViewDelegate methods
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
@@ -288,8 +292,6 @@
 }
 
 
-
-
 -(void)doubleTap:(UITapGestureRecognizer *)gesture
 {
   if (gesture.state == UIGestureRecognizerStateRecognized) {
@@ -317,6 +319,9 @@
   if (tappedNode && ![tappedNode isLeaf]) {
     self.variableMarkings[tappedNode.variableIdx-1] = [self.variableMarkings[tappedNode.variableIdx-1] isEqual:@YES] ? @NO : @YES;
     [view redraw];
+  } else if(  tappedNode ) {
+//    NSLog(@"Tapped on a leaf node");
+    [tappedNode.constraints debugPrint];
   }
 }
 
@@ -343,11 +348,16 @@
 -(void)selectedTreeWithName:(NSString *)treeName
 {
   [self.treeSelectionPopoverController dismissPopoverAnimated:YES];
-  dispatch_async(dispatch_queue_create("RSFLoadqueue", DISPATCH_QUEUE_SERIAL), ^(void){
-    [self setup:treeName withURLs:[self.rsfFiles objectForKey:treeName]];
-    self.treeSlider.value = 1;
-    dispatch_async(dispatch_get_main_queue(), ^(void){[self showTree:0];});
-  });
+//  dispatch_async(dispatch_queue_create("RSFLoadqueue", DISPATCH_QUEUE_SERIAL), ^(void){
+//    [self setup:treeName withURLs:[self.rsfFiles objectForKey:treeName]];
+//    dispatch_async(dispatch_get_main_queue(), ^(void){ self.treeSlider.value = 1;
+//                                                      [self updateUI];
+//                                                      [self showTree:0];});
+//  });
+  [self setup:treeName withURLs:[self.rsfFiles objectForKey:treeName]];
+  self.treeSlider.value = 1;
+  [self updateUI];
+  [self showTree:0];
 }
 
 @end

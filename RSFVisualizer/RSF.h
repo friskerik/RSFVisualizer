@@ -10,11 +10,12 @@
 #import "IDGenerator.h"
 #import "RSFFileReader.h"
 #import "RSFNode.h"
+#import "NodeConstraint.h"
 
 @interface RSF : NSObject
 @property (nonatomic, strong) NSString *rsfName;
 @property (nonatomic, strong) NSDictionary *rsfFileInfo;
 @property (nonatomic, strong) NSArray *trees; // of RSFNode *
-@property (nonatomic, strong) NSArray *variableNames;
-
+@property (nonatomic, strong) NSArray *variableNames; // of NSString *
+@property (nonatomic, strong) NSString *title;
 @end
