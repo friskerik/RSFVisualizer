@@ -79,11 +79,11 @@
 {
   NSString *s;
   if (self.lowerBound && self.upperBound) {
-    s = [NSString stringWithFormat:@"%@ < v <= %@", self.lowerBound, self.upperBound];
+    s = [NSString stringWithFormat:@"%@ < v ≤ %@", self.lowerBound, self.upperBound];
   } else if (!self.lowerBound && self.upperBound) {
-    s = [NSString stringWithFormat:@"v <= %@", self.upperBound];
+    s = [NSString stringWithFormat:@"v < %@", self.upperBound];
   } else {
-    s = [NSString stringWithFormat:@"%@ < v", self.lowerBound];
+    s = [NSString stringWithFormat:@"%@ ≤ v", self.lowerBound];
   }
   return s;
 }

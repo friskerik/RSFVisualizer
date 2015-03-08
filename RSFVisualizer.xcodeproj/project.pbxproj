@@ -34,6 +34,7 @@
 		AE8C3C0F1A7AD40D00E767CF /* VariablesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8C3C0E1A7AD40D00E767CF /* VariablesTableViewController.m */; };
 		AE8C3C121A7AD44500E767CF /* RSFSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8C3C111A7AD44500E767CF /* RSFSplitViewController.m */; };
 		AE9613E41A6856830067F4C0 /* RSFNode+additions.m in Sources */ = {isa = PBXBuildFile; fileRef = AE9613E31A6856830067F4C0 /* RSFNode+additions.m */; };
+		AEB8FCB21AAC4C9B00A9E463 /* TerminalNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEB8FCB11AAC4C9B00A9E463 /* TerminalNodeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,8 @@
 		AE939C471A744FE7000D9EBD /* TreeSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		AE9613E21A6856830067F4C0 /* RSFNode+additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RSFNode+additions.h"; sourceTree = "<group>"; };
 		AE9613E31A6856830067F4C0 /* RSFNode+additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RSFNode+additions.m"; sourceTree = "<group>"; };
+		AEB8FCB01AAC4C9B00A9E463 /* TerminalNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerminalNodeViewController.h; sourceTree = "<group>"; };
+		AEB8FCB11AAC4C9B00A9E463 /* TerminalNodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TerminalNodeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,12 +205,14 @@
 		AE8766081A6459950013529B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AE8765E21A64487B0013529B /* ViewController.h */,
+				AE8765E31A64487B0013529B /* ViewController.m */,
+				AEB8FCB01AAC4C9B00A9E463 /* TerminalNodeViewController.h */,
+				AEB8FCB11AAC4C9B00A9E463 /* TerminalNodeViewController.m */,
 				AE8C3C101A7AD44500E767CF /* RSFSplitViewController.h */,
 				AE8C3C111A7AD44500E767CF /* RSFSplitViewController.m */,
 				AE8C3C0D1A7AD40D00E767CF /* VariablesTableViewController.h */,
 				AE8C3C0E1A7AD40D00E767CF /* VariablesTableViewController.m */,
-				AE8765E21A64487B0013529B /* ViewController.h */,
-				AE8765E31A64487B0013529B /* ViewController.m */,
 				AE939C471A744FE7000D9EBD /* TreeSelectorViewControllerDelegate.h */,
 				AE05F6C41A7446FB00CF07BC /* TreeSelectorTableViewController.h */,
 				AE05F6C51A7446FB00CF07BC /* TreeSelectorTableViewController.m */,
@@ -356,6 +361,7 @@
 				AE8C3C121A7AD44500E767CF /* RSFSplitViewController.m in Sources */,
 				AE8C3C0F1A7AD40D00E767CF /* VariablesTableViewController.m in Sources */,
 				AE05F6C61A7446FB00CF07BC /* TreeSelectorTableViewController.m in Sources */,
+				AEB8FCB21AAC4C9B00A9E463 /* TerminalNodeViewController.m in Sources */,
 				AE8765E11A64487B0013529B /* AppDelegate.m in Sources */,
 				AE8765DE1A64487B0013529B /* main.m in Sources */,
 				AE0DF69C1AAB984F000208DE /* NodeConstraint.m in Sources */,

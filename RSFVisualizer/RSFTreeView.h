@@ -26,4 +26,6 @@ typedef enum {NODE_ID, NODE_LEVEL} NodeLabelType;
 -(void)scaleToFit;
 -(void)redraw;
 -(RSFNode *)tappedNode:(CGPoint)p;
+-(CGRect)nodeRectOnScreen:(RSFNode *)node;
+
 @end

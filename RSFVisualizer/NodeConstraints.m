@@ -48,9 +48,9 @@
     NodeConstraint *c = [self.constraints objectForKey:key];
     
     if (c.lowerBound && c.upperBound) {
-      NSLog(@"%@ < v%@ <= %@\n", c.lowerBound, key, c.upperBound);
+      NSLog(@"%@ < v%@ ≤ %@\n", c.lowerBound, key, c.upperBound);
     } else if (!c.lowerBound && c.upperBound) {
-      NSLog(@"v%@ <= %@\n", key, c.upperBound);
+      NSLog(@"v%@ ≤ %@\n", key, c.upperBound);
     } else {
       NSLog(@"%@ < v%@\n", c.lowerBound, key);
     }

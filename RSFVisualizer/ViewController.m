@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "RSFNode.h"
+#import "RSFNode+additions.h"
 #import "RSFTreeView.h"
 #import "RSFFileReader.h"
 #import "RSFNode+additions.h"
@@ -15,6 +16,7 @@
 #import "TreeSelectorTableViewController.h"
 #import "VariablesTableViewController.h"
 #import "RSFTreeMarkingDelegate.h"
+#import "TerminalNodeViewController.h"
 
 @interface ViewController () <UIScrollViewDelegate,TreeSelectorViewControllerDelegate, VariablesTableViewControllerDelegate,RSFTreeMarkingDelegate>
 @property (nonatomic, strong) RSFNode *rootNode;
@@ -321,7 +323,21 @@
     [view redraw];
   } else if(  tappedNode ) {
 //    NSLog(@"Tapped on a leaf node");
-    [tappedNode.constraints debugPrint];
+    TerminalNodeViewController *tnvc;
+
+    if ((tnvc = (TerminalNodeViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"NodeConstraintsVC"])) {
+      tnvc.rsf = self.rsf;
+      tnvc.node = tappedNode;
+      UIPopoverController *popover = [[UIPopoverController alloc]
+                 initWithContentViewController:tnvc];
+//      [popover presentPopoverFromRect:CGRectMake(50, 50, 50, 50)
+//                               inView:self.view
+//             permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+      CGRect popoverAnchorRect = [self.treeView nodeRectOnScreen:tappedNode];
+      
+      [popover presentPopoverFromRect:popoverAnchorRect inView:self.treeView
+             permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
   }
 }
 
@@ -341,6 +357,8 @@
     TreeSelectorTableViewController *tsvc = (TreeSelectorTableViewController *)segue.destinationViewController;
     tsvc.rsfTreeNames = self.rsfTreeNames;
     tsvc.delegate = self;
+  } else if([segue.destinationViewController isKindOfClass:[TerminalNodeViewController class]]) {
+    NSLog(@"Preparing the terminal node view controller");
   }
 }
 
